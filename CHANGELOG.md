@@ -1,7 +1,31 @@
+[CHANGELOG.md](https://github.com/user-attachments/files/26662422/CHANGELOG.md)
 # Change log
 
 All notable changes to the Maui Permit Checklists are tracked here. This log is
 updated as part of the quarterly review cycle and any out-of-cycle fixes.
+
+## 2026-04 (out-of-cycle) — Agricultural Property Permit Checklist added
+
+- New checklist published at `checklists/ag-property-permit.html` covering the
+  additional permitting requirements for building on agricultural-zoned land in
+  Maui County. Structured as a four-phase walkthrough: Before You Design, Before
+  You File, What to File, and After the Permit.
+- Covers: MCC 19.30A dimensional standards and dwelling limits, the two-layer
+  state/county framework (HRS Chapter 205 + MCC 19.30A), the two-of-three test
+  for farm labor dwellings, complete farm plan preparation and submission guide,
+  septic/IWS sizing and DOH approval process (HAR 11-62), the dual-system
+  workaround for 6+ bedroom situations, HRS 46-88 agricultural building
+  exemption, structure naming/justification, and six common pitfalls.
+- Landing page (`index.html`) updated: heading changed from "Two checklists" to
+  "Three checklists, three paths"; new card added for the ag checklist; grid
+  layout updated to three columns on wider screens; meta description updated.
+- Building Permit Submission Checklist (`checklists/building-permit.html`) gains
+  a teal callout near the top cross-referencing the ag checklist for parcels
+  zoned agricultural under MCC 19.30A.
+- Personal contact information (architect name, personal email, personal phone)
+  removed from the footer of `building-permit.html` and `sma-permit.html`, and
+  from both Python generators (`build_bpc_pdf.py` and `build_sma_checklist.py`).
+  All pages now show `studio@oenmaui.com` only.
 
 ## 2026-04 (out-of-cycle) — July 2026 permit reform notes added
 
