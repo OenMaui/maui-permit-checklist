@@ -136,6 +136,36 @@
     .disclaimer p { margin-bottom: 10px; }
     .disclaimer p:last-child { margin-bottom: 0; }
 
+    /* ── Heads-up note (sand + teal border, distinct from disclaimer) ── */
+    .heads-up {
+      background: #f2f7f8;
+      border-left: 6px solid var(--teal);
+      border-top: 1px solid #d0dde1;
+      border-right: 1px solid #d0dde1;
+      border-bottom: 1px solid #d0dde1;
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 4px 0 36px;
+      color: var(--ocean);
+      font-size: 14.5px;
+      line-height: 1.68;
+    }
+    .heads-up .hu-h {
+      font-weight: 700;
+      color: var(--teal-d);
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .heads-up p { margin: 0 0 10px; }
+    .heads-up p:last-child { margin-bottom: 0; }
+    .heads-up a.read-more {
+      font-weight: 700;
+      color: var(--teal-d);
+    }
+    .heads-up a.read-more:hover { color: var(--ocean); }
+
     /* ── Section headings ───────────────────────── */
     h2 {
       font-family: Georgia, 'Times New Roman', serif;
@@ -311,6 +341,12 @@
       <p>Rules change. We update these documents on a quarterly schedule, and every update is recorded with a date and a change log. Before you rely on any item for a submission, confirm it against the current published requirement from the relevant agency.</p>
       <p>If you are unsure whether an item applies to your project, talk to a licensed professional or the permitting agency directly. If you find an error or something out of date, please <a href="https://github.com/oen-maui/maui-permit-checklists/discussions">let us know through GitHub Discussions</a> or <a href="mailto:studio@oenmaui.com?subject=Maui%20Permit%20Checklists%20%E2%80%94%20feedback">email us directly</a>.</p>
     </section>
+
+    <aside class="heads-up" aria-label="Heads up — new rules effective July 1, 2026">
+      <div class="hu-h">Heads up — new rules effective July 1, 2026</div>
+      <p>Three Hawaiʻi laws passed in 2025 change how housing permits and historic-preservation review work in Maui County. One of them, Act 295, creates a new expedited permit pathway for qualifying single-family and multi-family housing projects starting July 1, 2026. It does not apply to every project, and the details matter.</p>
+      <p>We have written a plain-language summary of what is actually in the laws — and what is not — so you can tell the difference between the rumor version and the rule version. <a class="read-more" href="updates/july-2026-permit-reforms.html">Read our July 2026 permit reform notes →</a></p>
+    </aside>
 
     <h2>Two checklists</h2>
 

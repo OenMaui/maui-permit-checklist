@@ -3,6 +3,34 @@
 All notable changes to the Maui Permit Checklists are tracked here. This log is
 updated as part of the quarterly review cycle and any out-of-cycle fixes.
 
+## 2026-04 (out-of-cycle) — July 2026 permit reform notes added
+
+- New page published at `updates/july-2026-permit-reforms.html` covering three
+  Hawaiʻi state laws passed in 2025 that affect Maui County permitting:
+  **Act 295 (SB 66)**, the expedited permit pathway for single-family and
+  multi-family housing (effective July 1, 2026, sunsets June 30, 2031);
+  **Act 293 (SB 15)**, the Chapter 6E historic-review amendment (already in
+  effect as of July 3, 2025); and **Act 306 (HB 830)**, the SHPD third-party
+  consultant valve (operative provisions effective July 1, 2026).
+- The page is written in plain language for design professionals, homeowners,
+  and contractors, and explicitly calls out two frequent misreadings — that
+  Act 295 applies to any delayed permit, and that Act 293 eliminates historic
+  review for anything not on a register. Neither is correct.
+- Landing page (`index.html`) gains a heads-up callout linking to the new
+  page, sitting between the existing disclaimer and the checklist cards.
+- Building Permit Submission Checklist (`checklists/building-permit.html`)
+  gains a heads-up note at the top of the page chrome flagging the Act 295
+  pathway for qualifying inland housing projects.
+- Maui SMA Permit Checklist (`checklists/sma-permit.html`) gains a heads-up
+  note explaining that Act 295 **does not** reach shoreline work — the
+  expedited pathway expressly excludes shoreline parcels and parcels impacted
+  by waves, storm waves, high tide, or shoreline erosion, so the SMA process
+  remains the path for coastal projects. This asymmetric framing between the
+  two checklist pages is intentional.
+- The quarterly maintenance review scheduled for July 1, 2026 will revisit
+  the new page and flip the framing from "coming" to "in effect" when the
+  operative laws actually take hold.
+
 ## 2026-04 — Initial public launch
 
 - Building Permit Submission Checklist **v1.4** and Maui SMA Permit Checklist **v1.2**
