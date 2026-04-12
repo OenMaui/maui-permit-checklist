@@ -51,7 +51,7 @@ DOC_SUBTITLE     = "County of Maui Planning Department — Special Management Ar
 DOC_SCOPE        = "HRS Ch. 205A · MC-12 Ch. 202 (eff. Aug 25, 2024) · Act 125 (2025)"
 DOC_REV          = "Rev. April 2026 — v1.2"
 DOC_SISTER       = "Sister document to the Building Permit Submission Checklist"
-PREPARED_BY      = "Erik Thorup, Architect · erik@oenmaui.com · 808.446.6999"
+PREPARED_BY      = "studio@oenmaui.com"
 
 COLOR_ACCENT     = HexColor("#0d4f6e")
 COLOR_ACCENT2    = HexColor("#2b7a9c")
