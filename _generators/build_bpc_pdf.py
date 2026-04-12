@@ -473,7 +473,7 @@ def build_story(data: dict):
         Paragraph(
             "<i>This document is a working procedural tool, not legal advice. "
             "Confirm current Maui County DSA and Planning Department requirements "
-            "before each filing. Prepared by Erik Thorup, Oʻen Maui Architecture + "
+            "before each filing. Prepared by Oʻen Maui Architecture + "
             "Design.</i>",
             STY_FOOT,
         )
@@ -502,7 +502,7 @@ def build_pdf(html_path: Path, pdf_path: Path):
         str(pdf_path),
         pagesize=LETTER,
         title="Oʻen Maui — Building Permit Submission Checklist",
-        author="Erik Thorup, Oʻen Maui Architecture + Design",
+        author="Oʻen Maui Architecture + Design",
         subject="Maui County building permit pre-submittal QC",
         keywords="Maui building permit MAPPS DSA checklist",
     )
