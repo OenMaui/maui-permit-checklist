@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oʻen Maui — SMA Permit Submission Checklist</title>
+<style>
+  :root{
+    --bg:#f6f4ef;
+    --ink:#1f2a36;
+    --muted:#5a6875;
+    --accent:#0d4f6e;
+    --accent2:#2b7a9c;
+    --required:#b5121b;
+    --conditional:#b36b00;
+    --new:#116530;
+    --xref:#4a1f6e;
+    --xref-bg:#efeaf5;
+    --card:#ffffff;
+    --line:#d9d3c4;
+    --highlight:#fff6d6;
+    --highlight-border:#e0b400;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    margin:0;
+    padding:0 0 80px 0;
+    line-height:1.5;
+  }
+  header{
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);
+    color:#fff;
+    padding:30px 40px 24px 40px;
+    border-bottom:4px solid #083a52;
+  }
+  .brand{
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:0.9;
+    margin-bottom:8px;
+  }
+  header h1{
+    margin:0 0 4px 0;
+    font-size:26px;
+    letter-spacing:0.2px;
+  }
+  header .subtitle{
+    font-size:14px;
+    opacity:0.92;
+  }
+  header .tagrow{margin-top:10px;}
+  header .tag{
+    display:inline-block;
+    background:rgba(255,255,255,0.15);
+    padding:3px 10px;
+    border-radius:12px;
+    font-size:11.5px;
+    margin-right:6px;
+    margin-top:6px;
+  }
+  header .rev{
+    position:absolute;top:18px;right:28px;
+    font-size:11px;opacity:0.85;
+  }
+  header{position:relative;}
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:22px 28px;
+  }
+  .projectbar{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 18px;
+    margin:0 0 18px 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px 18px;
+    font-size:12px;
+  }
+  .projectbar .field{
+    border-bottom:1px solid var(--line);
+    padding-bottom:3px;
+  }
+  .projectbar .label{
+    display:block;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:9.5px;
+    color:var(--muted);
+    margin-bottom:2px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 16px;
+    margin:0 0 20px 0;
+    font-size:12.5px;
+  }
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{
+    width:10px;height:10px;border-radius:50%;display:inline-block;
+  }
+  .dot.req{background:var(--required);}
+  .dot.cond{background:var(--conditional);}
+  .dot.new{background:var(--new);}
+  .dot.xref{background:var(--xref);}
+  .alert{
+    background:var(--highlight);
+    border:1px solid var(--highlight-border);
+    border-left:6px solid var(--highlight-border);
+    padding:16px 20px;
+    border-radius:8px;
+    margin:0 0 22px 0;
+  }
+  .alert h2{
+    margin:0 0 8px 0;
+    font-size:16px;
+    color:#6b4a00;
+  }
+  .alert ul{margin:6px 0 0 18px;padding:0;}
+  .alert li{margin:4px 0;font-size:13px;}
+  .alert li strong{color:#6b4a00;}
+  section.phase{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    margin:0 0 18px 0;
+    padding:18px 24px 10px 24px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.03);
+    break-inside:avoid;
+  }
+  section.phase h2{
+    margin:0 0 3px 0;
+    color:var(--accent);
+    font-size:17px;
+    border-bottom:2px solid var(--line);
+    padding-bottom:7px;
+  }
+  section.phase .phase-sub{
+    color:var(--muted);
+    font-size:12.5px;
+    margin:5px 0 12px 0;
+    font-style:italic;
+  }
+  .item{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    padding:8px 6px;
+    border-bottom:1px dashed #e8e3d4;
+  }
+  .item:last-child{border-bottom:none;}
+  .item input[type=checkbox]{
+    width:17px;
+    height:17px;
+    margin-top:3px;
+    flex-shrink:0;
+    accent-color:var(--accent);
+    cursor:pointer;
+  }
+  .item label{
+    flex:1;
+    cursor:pointer;
+    font-size:13.8px;
+  }
+  .flag{
+    display:inline-block;
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:0.4px;
+    padding:2px 6px;
+    border-radius:10px;
+    margin-right:6px;
+    vertical-align:1px;
+    text-transform:uppercase;
+  }
+  .flag.req{background:var(--required);color:#fff;}
+  .flag.cond{background:var(--conditional);color:#fff;}
+  .flag.new{background:var(--new);color:#fff;}
+  .item label .note{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+  }
+  .item label .xref{
+    display:inline-block;
+    background:var(--xref-bg);
+    color:var(--xref);
+    font-size:10.5px;
+    padding:2px 7px;
+    margin-top:4px;
+    border-radius:3px;
+    font-weight:600;
+    letter-spacing:0.2px;
+  }
+  .item input[type=checkbox]:checked + label{
+    text-decoration:line-through;
+    color:#8a8578;
+  }
+  .controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:10px 0 16px 0;
+  }
+  .controls button{
+    font-family:inherit;
+    font-size:12.5px;
+    padding:7px 14px;
+    border:1px solid var(--accent);
+    background:#fff;
+    color:var(--accent);
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .controls button:hover{background:var(--accent);color:#fff;}
+  .progress{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:9px 14px;
+    margin:0 0 16px 0;
+    font-size:12.5px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .bar{
+    flex:1;
+    height:9px;
+    background:#e6e1d1;
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .bar > div{
+    height:100%;
+    background:linear-gradient(90deg,#2b7a9c,#0d4f6e);
+    width:0%;
+    transition:width 0.25s ease;
+  }
+  .xref-matrix{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12.5px;
+    margin-top:8px;
+  }
+  .xref-matrix th,.xref-matrix td{
+    text-align:left;
+    border:1px solid var(--line);
+    padding:8px 10px;
+    vertical-align:top;
+  }
+  .xref-matrix th{
+    background:#eef4f7;
+    color:var(--accent);
+  }
+  .sources{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 18px;
+    margin:0 0 16px 0;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+  .sources h3{
+    margin:0 0 6px 0;
+    color:var(--accent);
+    font-size:13px;
+  }
+  .signoff{
+    font-size:11px;
+    color:var(--muted);
+    margin:14px 0 0 0;
+    padding-top:10px;
+    border-top:1px solid var(--line);
+  }
+  @media print{
+    body{background:#fff;}
+    .controls,.progress{display:none;}
+    section.phase{break-inside:avoid;box-shadow:none;border:1px solid #999;}
+    header{background:#0d4f6e !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ SITE CHROME (community checklists wrapper) ════════ -->
+<style>
+  .ckx-bar {
+    max-width: 900px;
+    margin: 0 auto 16px;
+    padding: 18px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+  }
+  .ckx-back { color: #1a4a5c; text-decoration: none; font-weight: 600; }
+  .ckx-back:hover { color: #2a7a8c; text-decoration: underline; }
+  .ckx-back::before { content: "← "; color: #2a7a8c; }
+  .ckx-home { color: #7a6e64; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+  .ckx-home:hover { color: #2a7a8c; }
+  .ckx-disclaimer {
+    max-width: 900px;
+    margin: 0 auto 22px;
+    padding: 18px 22px;
+    background: #fdf6e3;
+    border-left: 6px solid #c08a3e;
+    border-top: 1px solid #e6d8a8;
+    border-right: 1px solid #e6d8a8;
+    border-bottom: 1px solid #e6d8a8;
+    border-radius: 6px;
+    color: #7a5220;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .ckx-disclaimer .ckx-dh {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .ckx-disclaimer p { margin: 0 0 6px; }
+  .ckx-disclaimer p:last-child { margin-bottom: 0; }
+  .ckx-disclaimer a { color: #7a5220; text-decoration: underline; }
+  @media print {
+    .ckx-bar, .ckx-disclaimer { display: none !important; }
+  }
+</style>
+<nav class="ckx-bar">
+  <a class="ckx-back" href="../index.html">Maui Permit Checklists</a>
+  <a class="ckx-home" href="https://oenmaui.com">oenmaui.com ↗</a>
+</nav>
+<aside class="ckx-disclaimer" aria-label="Please read before using this checklist">
+  <div class="ckx-dh">Please read before using this checklist</div>
+  <p>This is an educational summary of publicly available Maui County and State of Hawaiʻi permitting requirements, published by Oʻen Maui Architecture + Design as a community resource. It is provided as-is, without warranty of any kind — not legal advice, engineering advice, or official regulatory guidance.</p>
+  <p>Rules change. Before you rely on any item for a submission, confirm it against the current published requirement from the relevant agency. Found an error? <a href="https://github.com/oen-maui/maui-permit-checklists/discussions">Let us know on GitHub</a> or email <a href="mailto:studio@oenmaui.com?subject=Maui%20Permit%20Checklists%20%E2%80%94%20feedback">studio@oenmaui.com</a>.</p>
+</aside>
+<!-- ════════ END SITE CHROME ════════ -->
+
+<header>
+  <div class="rev">Rev. April 2026 — v1.2</div>
+  <div class="brand">Oʻen Maui Architecture + Design</div>
+  <h1>SMA Permit Submission Checklist</h1>
+  <div class="subtitle">County of Maui Planning Department — Special Management Area</div>
+  <div class="tagrow">
+    <span class="tag">HRS Ch. 205A</span>
+    <span class="tag">MC-12 Ch. 202 (eff. Aug 25, 2024)</span>
+    <span class="tag">Act 125 (2025)</span>
+    <span class="tag">Sister document to the Building Permit Submission Checklist</span>
+  </div>
+</header>
+<main>
+  <div class="projectbar">
+    <div class="field"><span class="label">Project Name</span>&nbsp;</div>
+    <div class="field"><span class="label">Address</span>&nbsp;</div>
+    <div class="field"><span class="label">TMK</span>&nbsp;</div>
+    <div class="field"><span class="label">SMA Assessment No. (if known)</span>&nbsp;</div>
+    <div class="field"><span class="label">Architect of Record</span>&nbsp;</div>
+    <div class="field"><span class="label">Submission Date</span>&nbsp;</div>
+    <div class="field"><span class="label">Prepared By</span>&nbsp;</div>
+    <div class="field"><span class="label">Reviewer / Checker</span>&nbsp;</div>
+    <div class="field"><span class="label">Filing Type (Exempt / Minor / Major)</span>&nbsp;</div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot req"></span> <strong>REQ</strong> — Required</span>
+    <span><span class="dot cond"></span> <strong>COND</strong> — Conditional / if triggered</span>
+    <span><span class="dot new"></span> <strong>NEW</strong> — Recent rule change</span>
+    <span><span class="dot xref"></span> <strong>↔ BPC</strong> — Cross-reference to Building Permit Checklist</span>
+  </div>
+
+  <div class="alert">
+    <h2>⚠ Recent Rule Changes to Know Before Filing</h2>
+    <ul>
+      <li><strong>v1.2 — Erosion Hazard Line is the default setback line (2024 Shoreline Rule update).</strong> Phase 1 reordered so the EHL mapped/unmapped check happens BEFORE any decision about ordering a certified shoreline survey. Phase 4 item on certified shoreline surveys rewritten: under the 2024 Maui Island Shoreline Rule update, where the EHL is mapped it IS the default shoreline setback line and no certified shoreline survey is required. A survey is now only needed when (1) the EHL is unmapped for the parcel, (2) the team requests an alternate setback on an accreting or erosion-resistant lot, or (3) a Shoreline Setback Variance is being filed. The former &quot;abuts the shoreline → survey&quot; trigger has been removed.</li>
+      <li><strong>v1.1 — Cross-referenced with Building Permit Checklist v1.4 (Apr 2026).</strong> All ↔ BPC § X cross-references re-numbered to match BPC v1.3/v1.4 section structure (Civil/Grading is now § 10, Agency Approvals § 11, Frequently Flagged § 12). The Building Permit Checklist was given reverse ↔ SMA Phase X tags so the two documents now read as a matched pair.</li>
+      <li><strong>Act 125 (effective May 29, 2025).</strong> Amended HRS 205A-22. Minor Permit valuation ceiling is now $750,000 for non-shoreline parcels, but only $500,000 for shoreline parcels or parcels impacted by waves, storm surge, high tide, or shoreline erosion. Above these amounts → Major / SMA Use Permit.</li>
+      <li><strong>Maui SMA Rules amended Aug 25, 2024 (MC-12, Chapter 202).</strong> Clarified categorical exemptions; expressly stated that single-family residences are not categorical exemptions (though they may still be found exempt after assessment); tightened treatment of repair / renovation scope, ground disturbance, and cumulative effects.</li>
+      <li><strong>MAPPS-only filing.</strong> Maui Planning Department no longer accepts paper SMA applications. All filings go through the online MAPPS portal, and a processed Land Use Designation (LUD) form must be attached to any SMA Use Permit filing.</li>
+      <li><strong>Shoreline setback / erosion.</strong> Maui&#x27;s shoreline framework now embeds projected erosion and 3.2 ft of sea-level rise into the Erosion Hazard Line used for setback determinations — directly relevant to most South Maui oceanfront parcels.</li>
+      <li><strong>Legacy PDF packets are stale.</strong> Some County PDFs still cite the pre-2025 $500,000 general Major threshold. Use current MAPPS guidance and Act 125 language, not the legacy packets.</li>
+    </ul>
+  </div>
+
+  <div class="controls">
+    <button onclick="checkAll(true)">Check All</button>
+    <button onclick="checkAll(false)">Clear All</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <div class="progress">
+    <span id="progressLabel">0 of 0 complete</span>
+    <div class="bar"><div id="progressBar"></div></div>
+    <span id="progressPct">0%</span>
+  </div>
+
+  <section class="phase">
+    <h2>Phase 1 — Parcel Due Diligence &amp; Overlay Screening</h2>
+    <div class="phase-sub">Before any design commitment or valuation work. South Maui coastal parcels frequently carry multiple overlapping overlays.</div>
+    <div class="item"><input type="checkbox" id="p1-01"><label for="p1-01"><span class="flag req">REQ</span>Confirm parcel lies within the mapped Maui SMA boundary (County SMA maps / MAPPS lookup).<span class="note">SMA approval is the first permit required for development in the SMA — other agencies should not authorize development first.</span><span class="xref">↔ BPC § 4 Site Plan (SMA notation) · § 11 Agency Approvals</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-02"><label for="p1-02"><span class="flag req">REQ</span>Pull current TMK report: zoning, community plan designation, state land use district, flood zone, shoreline overlays, special districts.<span class="xref">↔ BPC § 4 Site Plan</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-03"><label for="p1-03"><span class="flag req">REQ</span>Obtain a processed Land Use Designation (LUD) form through MAPPS.<span class="note">Required attachment for any SMA Use Permit filing. File the LUD request early — it is a separate MAPPS workflow.</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-04"><label for="p1-04"><span class="flag req">REQ</span>Identify whether the parcel is a shoreline parcel or is impacted by waves, storm surge, high tide, or shoreline erosion.<span class="note">This determination controls whether the $500,000 or $750,000 Minor threshold applies under Act 125.</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-05"><label for="p1-05"><span class="flag req">REQ</span>Determine whether the parcel has a mapped Erosion Hazard Line (EHL) using the County&#x27;s published Maui Island EHL mapping.<span class="note">This check drives every downstream shoreline decision and must happen BEFORE ordering any certified shoreline survey. The EHL was modeled by the UH Climate Resilience Collaborative (projected erosion + 3.2 ft sea-level rise) with minor County adjustments for accreting or geologically stable shorelines.</span><span class="xref">↔ BPC § 4 Site Plan (coastal setback)</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-06"><label for="p1-06"><span class="flag req">REQ</span>Record the resulting default shoreline setback line based on the EHL check in p1-05.<span class="note">If the EHL is mapped, the EHL itself is the default setback line — under the 2024 Maui Island Shoreline Rule update, no certified shoreline survey is required in this default case. If the EHL is NOT mapped for the parcel, the default setback reverts to 200 ft (or an optional lot-depth-based formula), and a state-certified shoreline survey under HRS 205A will be needed in Phase 4 to establish the baseline.</span><span class="xref">↔ BPC § 4 Site Plan (coastal setback)</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-07"><label for="p1-07"><span class="flag cond">COND</span>Flag whether the project team intends to request an alternate shoreline setback (e.g., lot is accreting or known to be geologically erosion-resistant).<span class="note">If yes, a state-certified shoreline survey will also be required in Phase 4 — the EHL distance is then applied from the certified shoreline instead of from the default EHL line. If the Planning Director agrees the shoreline is accreting or erosion-resistant, the setback may instead be established using the unmapped-EHL method.</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-08"><label for="p1-08"><span class="flag req">REQ</span>Confirm FEMA flood zone and whether any proposed work would trigger a Flood Development Permit.<span class="note">If required, the Flood Permit must issue before an SMA Exemption or Minor Permit approval.</span><span class="xref">↔ BPC § 4 Site Plan (flood zone designation)</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-09"><label for="p1-09"><span class="flag cond">COND</span>Screen for tsunami inundation, coastal dune, wetland, estuary, and geologically hazardous overlays.<span class="note">These feed directly into the County&#x27;s significance criteria and can push a project into Major.</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-10"><label for="p1-10"><span class="flag cond">COND</span>Check for mapped cultural / historic / archaeological resources or iwi kūpuna sensitivity in the vicinity.<span class="xref">↔ BPC § 4 Site Plan (SHPD) · § 11 SHPD review</span></label></div>
+    <div class="item"><input type="checkbox" id="p1-11"><label for="p1-11"><span class="flag req">REQ</span>Verify consistency with County General Plan, Maui Island Plan, applicable Community Plan (South Maui), and zoning.<span class="note">Inconsistency may require a concurrent plan amendment. South Maui Community Plan update is still underway.</span></label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 2 — Threshold Determination — Is This &quot;Development&quot;?</h2>
+    <div class="phase-sub">The first legal question is not cost — it is whether the activity is &quot;development&quot; under HRS 205A. Only then does it sort into Exempt / Minor / Major.</div>
+    <div class="item"><input type="checkbox" id="p2-01"><label for="p2-01"><span class="flag req">REQ</span>Test scope against the HRS 205A definition of &quot;development&quot; (placement of structures, grading, dredging, mining, change in density/intensity, substantial changes in appearance of land or water, etc.).</label></div>
+    <div class="item"><input type="checkbox" id="p2-02"><label for="p2-02"><span class="flag req">REQ</span><span class="flag new">NEW</span>Check the 2024-amended categorical exemptions list in MC-12 Ch. 202 before assuming exempt status.<span class="note">The 2024 rules clarified several exemptions and confirmed that single-family residences are not categorical exemptions.</span></label></div>
+    <div class="item"><input type="checkbox" id="p2-03"><label for="p2-03"><span class="flag cond">COND</span>For repair / renovation / like-for-like work, confirm no new ground disturbance, no expansion of scope, and no cumulative effect that would pull the work back into SMA review.</label></div>
+    <div class="item"><input type="checkbox" id="p2-04"><label for="p2-04"><span class="flag req">REQ</span>Prepare a defensible valuation estimate (construction cost basis) for the proposed development.<span class="xref">↔ BPC § 1 PS-Form A (construction value)</span></label></div>
+    <div class="item"><input type="checkbox" id="p2-05"><label for="p2-05"><span class="flag req">REQ</span><span class="flag new">NEW</span>Apply current Act 125 thresholds: Minor ≤ $750,000 on non-shoreline parcels · Minor ≤ $500,000 on shoreline or impacted parcels · Above → Major / SMA Use Permit.<span class="note">For most South Maui oceanfront sites, the operative ceiling is $500,000.</span></label></div>
+    <div class="item"><input type="checkbox" id="p2-06"><label for="p2-06"><span class="flag req">REQ</span>Independently assess whether the project may have a substantial adverse environmental or ecological effect (cumulative effects included). If yes → Major, regardless of valuation.</label></div>
+    <div class="item"><input type="checkbox" id="p2-07"><label for="p2-07"><span class="flag cond">COND</span>Flag &quot;Major-risk&quot; characteristics even if cost is low: seawalls/revetments, shoreline hardscape, major grading, new structures near shoreline, mapped erosion/flood exposure, access impacts, habitat/cultural concerns, or controversial public interest.</label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 3 — SMA Assessment Filing (MAPPS)</h2>
+    <div class="phase-sub">The SMA Assessment is the first practical filing on Maui. The Planning Director uses it to determine Exempt / Minor / Major / Emergency / Inconsistent.</div>
+    <div class="item"><input type="checkbox" id="p3-01"><label for="p3-01"><span class="flag req">REQ</span>Ownership documentation and owner&#x27;s authorization (if applicant is not owner).<span class="xref">↔ BPC § 1 Ownership &amp; Authorization</span></label></div>
+    <div class="item"><input type="checkbox" id="p3-02"><label for="p3-02"><span class="flag req">REQ</span>TMK, parcel area, and location map.</label></div>
+    <div class="item"><input type="checkbox" id="p3-03"><label for="p3-03"><span class="flag req">REQ</span>Scaled development / site plan showing all sensitive features (shoreline, setback line, flood zone boundary, drainage, access, vegetation, cultural features).<span class="xref">↔ BPC § 4 Site Plan (all subitems)</span></label></div>
+    <div class="item"><input type="checkbox" id="p3-04"><label for="p3-04"><span class="flag cond">COND</span>Floor plans, sections, and elevations for any new or expanded structures.<span class="xref">↔ BPC § 5 Architectural</span></label></div>
+    <div class="item"><input type="checkbox" id="p3-05"><label for="p3-05"><span class="flag req">REQ</span>Site photographs (existing conditions, shoreline, access, adjacent uses).</label></div>
+    <div class="item"><input type="checkbox" id="p3-06"><label for="p3-06"><span class="flag req">REQ</span>Written project description and construction valuation estimate.</label></div>
+    <div class="item"><input type="checkbox" id="p3-07"><label for="p3-07"><span class="flag req">REQ</span>Written impact analysis addressing HRS 205A-26 criteria: coastal resources, shoreline access, drainage, wastewater, erosion/flood/SLR exposure, views, landforms, cultural resources, cumulative impacts, plan/zoning consistency.<span class="note">This is where most applications succeed or fail — it builds the administrative record.</span></label></div>
+    <div class="item"><input type="checkbox" id="p3-08"><label for="p3-08"><span class="flag req">REQ</span>Signed zoning / flood confirmation form.</label></div>
+    <div class="item"><input type="checkbox" id="p3-09"><label for="p3-09"><span class="flag req">REQ</span>Attach the processed LUD form.</label></div>
+    <div class="item"><input type="checkbox" id="p3-10"><label for="p3-10"><span class="flag cond">COND</span>Chapter 343 (HEPA) materials (EA/EIS or agency decision documents) if environmental review is triggered.</label></div>
+    <div class="item"><input type="checkbox" id="p3-11"><label for="p3-11"><span class="flag cond">COND</span>Comments previously received from agencies or community organizations.</label></div>
+    <div class="item"><input type="checkbox" id="p3-12"><label for="p3-12"><span class="flag req">REQ</span>Submit the entire package through MAPPS online portal (paper not accepted).<span class="xref">↔ BPC § 1 MAPPS submission method</span></label></div>
+    <div class="item"><input type="checkbox" id="p3-13"><label for="p3-13"><span class="flag cond">COND</span>Respond to Director&#x27;s circulation to reviewing agencies (typical 30-day comment window).</label></div>
+    <div class="item"><input type="checkbox" id="p3-14"><label for="p3-14"><span class="flag req">REQ</span>Provide applicant responses to agency comments until the Department deems the application complete.</label></div>
+    <div class="item"><input type="checkbox" id="p3-15"><label for="p3-15"><span class="flag req">REQ</span>Receive written Director determination (Exempt / Minor / Major / Emergency / Inconsistent) within 30 calendar days of completeness.</label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 4 — Parallel Coastal &amp; Environmental Reviews</h2>
+    <div class="phase-sub">Almost every South Maui coastal project triggers at least one of these alongside the SMA track.</div>
+    <div class="item"><input type="checkbox" id="p4-01"><label for="p4-01"><span class="flag cond">COND</span>File for Shoreline Setback Approval / Determination (SSAD) for work allowed within the shoreline setback area.<span class="xref">↔ BPC § 4 Site Plan (coastal setback)</span></label></div>
+    <div class="item"><input type="checkbox" id="p4-02"><label for="p4-02"><span class="flag cond">COND</span>File for Shoreline Setback Variance (SSV) for structures or activities not otherwise permitted in the setback area.</label></div>
+    <div class="item"><input type="checkbox" id="p4-03"><label for="p4-03"><span class="flag cond">COND</span>Obtain a state-certified shoreline survey (HRS 205A, DLNR) ONLY if one of three triggers applies; otherwise skip — the EHL is the default setback line.<span class="note">Under the 2024 Maui Island Shoreline Rule update, a certified shoreline survey is required only when: (1) the parcel has no mapped EHL and you need to establish the baseline for the default 200 ft / lot-depth-based setback; (2) the project team is requesting an alternate setback on an accreting or geologically erosion-resistant lot, in which case the EHL horizontal distance is measured from the certified shoreline instead; or (3) a Shoreline Setback Variance (SSV) is being filed under HRS 205A-43. If none of those apply and the EHL is mapped, the former &quot;abuts the shoreline → order a survey&quot; requirement has been removed and no survey is needed. Confirm the relevant trigger from Phase 1 items p1-06 and p1-07 before ordering.</span><span class="xref">↔ BPC § 4 Site Plan (coastal setback)</span></label></div>
+    <div class="item"><input type="checkbox" id="p4-04"><label for="p4-04"><span class="flag cond">COND</span>File and obtain Flood Development Permit before SMA Exemption or Minor approval issues.<span class="xref">↔ BPC § 4 Site Plan (FEMA FIRM / BFE)</span></label></div>
+    <div class="item"><input type="checkbox" id="p4-05"><label for="p4-05"><span class="flag cond">COND</span>Complete Chapter 343 environmental review (EA/EIS) if the project involves state land, state funds, shoreline area, conservation district, historic sites, or other HEPA triggers.</label></div>
+    <div class="item"><input type="checkbox" id="p4-06"><label for="p4-06"><span class="flag cond">COND</span>Archaeological Inventory Survey (AIS) / SHPD consultation if cultural resources are implicated.<span class="xref">↔ BPC § 11 SHPD approval</span></label></div>
+    <div class="item"><input type="checkbox" id="p4-07"><label for="p4-07"><span class="flag cond">COND</span>Initiate concurrent General Plan / Community Plan / zoning amendment if the Director finds the project inconsistent.</label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 5A — SMA Minor Permit Path</h2>
+    <div class="phase-sub">Use this track only if the Director determines the project qualifies as Minor under current Act 125 thresholds AND has no substantial adverse effect.</div>
+    <div class="item"><input type="checkbox" id="p5a-01"><label for="p5a-01"><span class="flag req">REQ</span>Confirm the SMA Assessment can serve as the Minor application (Maui&#x27;s current procedure).</label></div>
+    <div class="item"><input type="checkbox" id="p5a-02"><label for="p5a-02"><span class="flag req">REQ</span>Ensure the impact narrative affirmatively supports the &quot;no substantial adverse environmental or ecological effect&quot; finding.</label></div>
+    <div class="item"><input type="checkbox" id="p5a-03"><label for="p5a-03"><span class="flag req">REQ</span>Receive Director&#x27;s written Minor Permit decision (approve / approve with conditions / deny).</label></div>
+    <div class="item"><input type="checkbox" id="p5a-04"><label for="p5a-04"><span class="flag cond">COND</span>Accept and document any permit conditions (BMPs, erosion control, wastewater, drainage, access, vegetation, etc.).<span class="xref">↔ BPC § 10 Civil/Grading BMPs</span></label></div>
+    <div class="item"><input type="checkbox" id="p5a-05"><label for="p5a-05"><span class="flag req">REQ</span>Confirm Director reports the approved Minor Permit to the Maui Planning Commission at its next regular meeting.</label></div>
+    <div class="item"><input type="checkbox" id="p5a-06"><label for="p5a-06"><span class="flag cond">COND</span>Preserve appeal rights / track appeal window for any aggrieved party.</label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 5B — SMA Use Permit (Major) Path</h2>
+    <div class="phase-sub">Applies if valuation exceeds the Act 125 threshold or the project may have a substantial adverse environmental / ecological effect. Heard by the Maui Planning Commission.</div>
+    <div class="item"><input type="checkbox" id="p5b-01"><label for="p5b-01"><span class="flag req">REQ</span>File the SMA Use Permit (SM1) application through MAPPS with fully processed LUD attached.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-02"><label for="p5b-02"><span class="flag req">REQ</span>Include all assessment-level materials plus a findings-ready record under HRS 205A-26.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-03"><label for="p5b-03"><span class="flag req">REQ</span>Pay applicable Major Use Permit fees.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-04"><label for="p5b-04"><span class="flag req">REQ</span>Department circulates to reviewing agencies; applicant responds in writing to all comments.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-05"><label for="p5b-05"><span class="flag req">REQ</span>Department confirms the application is complete before scheduling hearing.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-06"><label for="p5b-06"><span class="flag req">REQ</span>Prepare Notice of Application; publish after department review.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-07"><label for="p5b-07"><span class="flag req">REQ</span>Post a 9 sq ft project sign at the property.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-08"><label for="p5b-08"><span class="flag req">REQ</span>Mail hearing notice to owners of record within 500 ft of the subject parcel, not less than 30 calendar days before the hearing.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-09"><label for="p5b-09"><span class="flag req">REQ</span>Director publishes public notice of hearing not less than 30 days before the hearing date.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-10"><label for="p5b-10"><span class="flag req">REQ</span>Confirm the Department has notified the applicant of the hearing date at least 45 days prior.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-11"><label for="p5b-11"><span class="flag req">REQ</span>Prepare a findings-based presentation demonstrating HRS 205A-26 compliance: minimized/offset impacts, consistency with Ch. 205A objectives, consistency with plans and zoning, and appropriate conditions.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-12"><label for="p5b-12"><span class="flag cond">COND</span>Coordinate testimony, expert witnesses (coastal, civil, cultural, biologist), and exhibits.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-13"><label for="p5b-13"><span class="flag req">REQ</span>Attend the Maui Planning Commission hearing.</label></div>
+    <div class="item"><input type="checkbox" id="p5b-14"><label for="p5b-14"><span class="flag req">REQ</span>Receive written Decision and Order with terms, conditions, and findings (or denial if criteria not met).</label></div>
+    <div class="item"><input type="checkbox" id="p5b-15"><label for="p5b-15"><span class="flag cond">COND</span>Track appeal window and preserve the administrative record.</label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 6 — Post-Approval &amp; Sequencing With Building Plans</h2>
+    <div class="phase-sub">Tie the SMA outcome into the parallel Building Plan submittal workflow. This is where the two sister checklists must lock together.</div>
+    <div class="item"><input type="checkbox" id="p6-01"><label for="p6-01"><span class="flag req">REQ</span>Transcribe every SMA permit condition into the Building Permit Submission package — specifically into the site plan notes, civil/grading BMPs, and agency approvals section.<span class="xref">↔ BPC § 4, § 10, § 11</span></label></div>
+    <div class="item"><input type="checkbox" id="p6-02"><label for="p6-02"><span class="flag req">REQ</span>Do not submit for Building Permit issuance until SMA approval (and any SSAD/SSV, Flood, Ch. 343) are in hand — other agencies cannot authorize development ahead of SMA.<span class="xref">↔ BPC § 11 Planning Department / SMA Permit line</span></label></div>
+    <div class="item"><input type="checkbox" id="p6-03"><label for="p6-03"><span class="flag cond">COND</span>Incorporate erosion control, BMP, drainage, wastewater, and landscape conditions into civil drawings and SWPPP.<span class="xref">↔ BPC § 10 Civil/Grading BMPs</span></label></div>
+    <div class="item"><input type="checkbox" id="p6-04"><label for="p6-04"><span class="flag cond">COND</span>Schedule any required pre-construction coastal monitoring, archaeological monitoring, or cultural protocol before ground disturbance.</label></div>
+    <div class="item"><input type="checkbox" id="p6-05"><label for="p6-05"><span class="flag req">REQ</span>Maintain a compliance log of every SMA condition through construction and final inspection.</label></div>
+    <div class="item"><input type="checkbox" id="p6-06"><label for="p6-06"><span class="flag cond">COND</span>Track SMA permit expiration / extension rules and request extension before lapse if construction schedule slips.</label></div>
+    <div class="item"><input type="checkbox" id="p6-07"><label for="p6-07"><span class="flag req">REQ</span>File any required final / close-out compliance reports with the Planning Department.</label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Phase 7 — Common Traps — Final QC Pass</h2>
+    <div class="phase-sub">Final sanity check — each of these has derailed South Maui coastal projects.</div>
+    <div class="item"><input type="checkbox" id="p7-01"><label for="p7-01"><span class="flag req">REQ</span>Confirm you are not relying on pre-2025 PDF thresholds ($500K general Major line). Use Act 125 split thresholds.</label></div>
+    <div class="item"><input type="checkbox" id="p7-02"><label for="p7-02"><span class="flag req">REQ</span>Treat shoreline setback review as a parallel, not secondary, workflow.</label></div>
+    <div class="item"><input type="checkbox" id="p7-03"><label for="p7-03"><span class="flag req">REQ</span>Do not assume a single-family residence or a &quot;repair&quot; is automatically exempt.</label></div>
+    <div class="item"><input type="checkbox" id="p7-04"><label for="p7-04"><span class="flag req">REQ</span>Verify plan/zoning consistency before design is too far advanced to pivot.</label></div>
+    <div class="item"><input type="checkbox" id="p7-05"><label for="p7-05"><span class="flag req">REQ</span>Document cumulative effects from any prior/adjacent work on the same compound or ownership.</label></div>
+    <div class="item"><input type="checkbox" id="p7-06"><label for="p7-06"><span class="flag req">REQ</span>Confirm valuation basis is defensible and includes the full scope of work (no artificial splitting).</label></div>
+    <div class="item"><input type="checkbox" id="p7-07"><label for="p7-07"><span class="flag req">REQ</span>Confirm the Building Permit Submission Checklist has the SMA reference lines populated in § 4 and § 11 before building permit submittal.<span class="xref">↔ BPC § 4 + § 11</span></label></div>
+  </section>
+
+  <section class="phase">
+    <h2>Cross-Reference Matrix — SMA ↔ Building Permit Submission Checklist</h2>
+    <div class="phase-sub">Read across: each SMA checklist phase ties to one or more sections of the Building Permit Submission Checklist so the two documents move in lockstep.</div>
+    <table class="xref-matrix">
+      <thead><tr><th style="width:52%">SMA Permit Checklist Item</th><th>Building Permit Submission Checklist Reference</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1 Due Diligence — SMA overlay, flood zone, shoreline, SHPD screening</td><td>BPC § 4 Site Plan (SMA, FEMA flood zone, SHPD notations)</td></tr>
+        <tr><td>Phase 1 LUD form (zoning + community plan + state land use)</td><td>BPC § 11 Planning Department approval</td></tr>
+        <tr><td>Phase 2 Threshold — valuation basis</td><td>BPC § 1 PS-Form A construction value</td></tr>
+        <tr><td>Phase 3 SMA Assessment — site plan, impact analysis, MAPPS submission</td><td>BPC § 4 Site Plan, § 2 MAPPS digital standards</td></tr>
+        <tr><td>Phase 3 Ownership/authorization documents</td><td>BPC § 1 Ownership &amp; Authorization, PS-Form B</td></tr>
+        <tr><td>Phase 4 SSAD / SSV — shoreline setback</td><td>BPC § 4 Site Plan coastal setback line</td></tr>
+        <tr><td>Phase 4 Flood Development Permit</td><td>BPC § 4 Site Plan FEMA flood zone / BFE</td></tr>
+        <tr><td>Phase 4 AIS / SHPD consultation</td><td>BPC § 4 Site Plan SHPD, § 11 SHPD approval</td></tr>
+        <tr><td>Phase 5A/5B SMA decision</td><td>BPC § 11 SMA Permit line (must precede building permit)</td></tr>
+        <tr><td>Phase 6 Transcription of SMA conditions</td><td>BPC § 4 (site plan notes), § 10 (Civil/BMPs), § 11 (Agency approvals)</td></tr>
+        <tr><td>Phase 7 QC pass</td><td>BPC § 12 Frequently Flagged QC pass</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="sources">
+    <h3>Sources &amp; References</h3>
+    HRS Chapter 205A (Coastal Zone Management Law), Part II Special Management Areas · HRS § 205A-22 (definitions, as amended by Act 125, 2025) · HRS § 205A-26 (SMA approval criteria) · Maui Planning Commission SMA Rules, MC-12 Chapter 202 (amended effective August 25, 2024) · Maui County Planning Department — MAPPS Customer Self-Service portal (mapps.mauicounty.gov) · Maui County Planning — Maui Island Shoreline Rule Update (2024), EHL as default shoreline setback line · Maui County shoreline setback rules and Erosion Hazard Line framework (modeled by UH Climate Resilience Collaborative, projected erosion + 3.2 ft sea-level-rise assumption) · Maui County General Plan, Maui Island Plan, applicable Community Plans · Hawaiʻi Environmental Policy Act (HRS Chapter 343) · Maui County flood hazard rules (Flood Development Permit)
+  </div>
+
+  <div class="signoff">
+    Prepared by Oʻen Maui Architecture + Design · Erik Thorup, Architect · erik@oenmaui.com · 808.446.6999 · Rev. April 2026 — v1.2<br>
+    This checklist reflects publicly available Maui Planning Department requirements and firm experience as of the revision date. It is a working procedural tool, not legal advice. Rules, thresholds, and procedures change — confirm current requirements with the Maui Planning Department and qualified counsel before filing. Always verify parcel-specific overlays and current Community Plan status for South Maui before relying on any threshold determination.
+  </div>
+</main>
+
+<script>
+  const boxes = document.querySelectorAll('input[type="checkbox"]');
+  const bar = document.getElementById('progressBar');
+  const label = document.getElementById('progressLabel');
+  const pct = document.getElementById('progressPct');
+  function updateProgress(){
+    const total = boxes.length;
+    const done = Array.from(boxes).filter(b=>b.checked).length;
+    const p = total === 0 ? 0 : Math.round((done/total)*100);
+    bar.style.width = p + '%';
+    label.textContent = done + ' of ' + total + ' complete';
+    pct.textContent = p + '%';
+    try{
+      const state = {};
+      boxes.forEach(b=>state[b.id]=b.checked);
+      localStorage.setItem('oenMauiSmaChecklist', JSON.stringify(state));
+    }catch(e){}
+  }
+  function checkAll(val){
+    boxes.forEach(b=>b.checked=val);
+    updateProgress();
+  }
+  boxes.forEach(b=>b.addEventListener('change',updateProgress));
+  try{
+    const saved = JSON.parse(localStorage.getItem('oenMauiSmaChecklist')||'{}');
+    boxes.forEach(b=>{ if(saved[b.id]) b.checked = true; });
+  }catch(e){}
+  updateProgress();
+</script>
+</body>
+</html>

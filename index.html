@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maui Permit Checklists — Oʻen Maui Architecture + Design</title>
+  <meta name="description" content="Free, openly published permit checklists for Maui — Building Permit and SMA Permit. Maintained quarterly by Oʻen Maui Architecture + Design." />
+  <meta property="og:title" content="Maui Permit Checklists" />
+  <meta property="og:description" content="A free community resource from Oʻen Maui Architecture + Design." />
+  <meta property="og:type" content="website" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%232a7a8c'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23f5f0e8' font-weight='700'%3EO%3C/text%3E%3C/svg%3E" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #f5f0e8;
+      --ocean:   #1a4a5c;
+      --teal:    #2a7a8c;
+      --teal-d:  #1e5d6b;
+      --coral:   #c85a3a;
+      --gold:    #c8973a;
+      --sage:    #5a7a5c;
+      --light:   #f9f7f4;
+      --border:  #ddd8ce;
+      --text:    #2a2420;
+      --muted:   #7a6e64;
+      --ivory:   #fdf6e3;
+      --ochre:   #c08a3e;
+      --ochre-d: #7a5220;
+    }
+
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--teal-d); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Page shell ─────────────────────────────── */
+    .wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 28px 80px;
+    }
+
+    /* ── Site header ────────────────────────────── */
+    .site-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--ocean);
+    }
+    .brand span { color: var(--muted); font-weight: 400; }
+    .site-head .home-link {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Hero ───────────────────────────────────── */
+    .hero {
+      margin-bottom: 44px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--teal);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    h1.title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 44px;
+      line-height: 1.1;
+      color: var(--ocean);
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .subtitle {
+      font-size: 17px;
+      color: var(--muted);
+      font-style: italic;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    .lede {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .lede.muted { color: var(--muted); }
+
+    /* ── Disclaimer (sand/ivory + ochre border) ─── */
+    .disclaimer {
+      background: var(--ivory);
+      border-left: 6px solid var(--ochre);
+      border-top: 1px solid #e6d8a8;
+      border-right: 1px solid #e6d8a8;
+      border-bottom: 1px solid #e6d8a8;
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 36px 0;
+      color: var(--ochre-d);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .disclaimer .dh {
+      font-weight: 700;
+      color: var(--ochre-d);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .disclaimer p { margin-bottom: 10px; }
+    .disclaimer p:last-child { margin-bottom: 0; }
+
+    /* ── Section headings ───────────────────────── */
+    h2 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 24px;
+      color: var(--ocean);
+      font-weight: 700;
+      margin-top: 44px;
+      margin-bottom: 16px;
+      letter-spacing: -0.005em;
+    }
+
+    /* ── Cards (checklists) ─────────────────────── */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin: 28px 0 8px;
+    }
+    @media (min-width: 620px) {
+      .cards { grid-template-columns: 1fr 1fr; }
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 22px;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(26, 74, 92, 0.08);
+      border-color: var(--teal);
+    }
+    .card .ck-label {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--teal);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card h3 {
+      font-family: Georgia, serif;
+      font-size: 19px;
+      line-height: 1.25;
+      color: var(--ocean);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .card p {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.55;
+      flex-grow: 1;
+      margin-bottom: 18px;
+    }
+    .card .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 9px 14px;
+      border-radius: 5px;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background .12s ease, color .12s ease, border-color .12s ease;
+    }
+    .btn.primary {
+      background: var(--teal);
+      color: #fff;
+      border: 1px solid var(--teal);
+    }
+    .btn.primary:hover {
+      background: var(--teal-d);
+      border-color: var(--teal-d);
+      text-decoration: none;
+    }
+    .btn.secondary {
+      background: transparent;
+      color: var(--teal-d);
+      border: 1px solid var(--border);
+    }
+    .btn.secondary:hover {
+      border-color: var(--teal);
+      text-decoration: none;
+    }
+
+    /* ── Why section ────────────────────────────── */
+    .why p { font-size: 16px; line-height: 1.7; margin-bottom: 14px; }
+    .why .signoff { color: var(--muted); font-style: italic; }
+
+    /* ── Last updated / meta ────────────────────── */
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px 0 0;
+      margin-top: 44px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+    .meta-row .updated { font-weight: 500; }
+    .meta-row a { color: var(--muted); }
+    .meta-row a:hover { color: var(--teal-d); }
+
+    /* ── Footer ─────────────────────────────────── */
+    footer.site-foot {
+      margin-top: 48px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    footer .about-title {
+      color: var(--ocean);
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    footer .fine {
+      margin-top: 14px;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    footer .fine span { color: #bbada0; margin: 0 6px; }
+
+    /* ── Print ──────────────────────────────────── */
+    @media print {
+      body { background: #fff; }
+      .site-head, footer.site-foot { display: none; }
+      .wrap { max-width: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="site-head">
+      <div class="brand">Oʻen Maui Architecture + Design <span>·  Community Resources</span></div>
+      <a class="home-link" href="https://oenmaui.com">oenmaui.com ↗</a>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">A free community resource</div>
+      <h1 class="title">Maui Permit Checklists</h1>
+      <div class="subtitle">Published and maintained by Oʻen Maui Architecture + Design</div>
+
+      <p class="lede">
+        These are the permit checklists we use in our own practice — cleaned up, cross-referenced, and published for anyone on the island who needs them. Homeowners, contractors, other design firms, or just people trying to understand the process: you're welcome to use them.
+      </p>
+      <p class="lede muted">
+        The goal is simple: take something that is already public but scattered across county and state websites and put it in one clear place. If it saves someone a trip to the counter at the DSA or a phone call to DLNR, that's a win.
+      </p>
+    </section>
+
+    <section class="disclaimer" aria-label="Important notice before using these checklists">
+      <div class="dh">Please read before using this checklist</div>
+      <p>These checklists are educational summaries of publicly available Maui County and State of Hawaiʻi permitting requirements. They are published by Oʻen Maui Architecture + Design as a community resource and are provided as-is, without warranty of any kind.</p>
+      <p>They are not legal advice, engineering advice, or official regulatory guidance. They are not a substitute for the current requirements published by Maui County (Department of Public Works, Department of Planning, SHPD), the State of Hawaiʻi (DLNR, DOH), or any other agency with jurisdiction over your project.</p>
+      <p>Rules change. We update these documents on a quarterly schedule, and every update is recorded with a date and a change log. Before you rely on any item for a submission, confirm it against the current published requirement from the relevant agency.</p>
+      <p>If you are unsure whether an item applies to your project, talk to a licensed professional or the permitting agency directly. If you find an error or something out of date, please <a href="https://github.com/oen-maui/maui-permit-checklists/discussions">let us know through GitHub Discussions</a> or <a href="mailto:studio@oenmaui.com?subject=Maui%20Permit%20Checklists%20%E2%80%94%20feedback">email us directly</a>.</p>
+    </section>
+
+    <h2>Two checklists</h2>
+
+    <div class="cards">
+      <article class="card">
+        <div class="ck-label">Building Permit</div>
+        <h3>Building Permit Submission Checklist</h3>
+        <p>Everything a complete building permit package for a new residential project needs before you walk into the Department of Public Works. Covers forms, site plan, zoning, civil, agency approvals, and the items that get submissions flagged most often.</p>
+        <div class="actions">
+          <a class="btn primary" href="checklists/building-permit.html">View checklist</a>
+          <a class="btn secondary" href="downloads/Oen-Maui-Building-Permit-Submission-Checklist.pdf">Download PDF</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="ck-label">SMA Permit</div>
+        <h3>Maui SMA Permit Checklist</h3>
+        <p>A phase-by-phase walk-through of the Special Management Area process under HRS 205A, including the 2024 Maui Island Shoreline Rule update, the Erosion Hazard Line, and the Act 125 timeline changes. Cross-referenced with the Building Permit Checklist.</p>
+        <div class="actions">
+          <a class="btn primary" href="checklists/sma-permit.html">View checklist</a>
+          <a class="btn secondary" href="downloads/Oen-Maui-Maui-SMA-Permit-Checklist.pdf">Download PDF</a>
+        </div>
+      </article>
+    </div>
+
+    <p class="lede muted" style="margin-top: 22px; font-size: 14px;">
+      Both are kept in sync with the current rules. Every update lists what changed and why, with sources.
+    </p>
+
+    <section class="why">
+      <h2>Why we publish these</h2>
+      <p>Because it's useful. We're a small boutique firm on Maui doing careful, locally grounded work — and sharing these checklists openly makes life better for all of us, whether you're a homeowner, a contractor, or another design colleague working through the same process.</p>
+      <p class="signoff">If you need help going from checklist to permitted project, we're a short email away at <a href="mailto:studio@oenmaui.com?subject=Permitting%20help">studio@oenmaui.com</a>.</p>
+    </section>
+
+    <div class="meta-row">
+      <div class="updated">Last updated: April 2026  ·  Next scheduled review: July 2026</div>
+      <div><a href="CHANGELOG.md">Change log</a>  ·  <a href="https://github.com/oen-maui/maui-permit-checklists">Source on GitHub</a>  ·  <a href="https://github.com/oen-maui/maui-permit-checklists/discussions">Report an issue</a></div>
+    </div>
+
+    <footer class="site-foot">
+      <div class="about-title">About this site</div>
+      <p>The Maui Permit Checklists are published and maintained by <strong>Oʻen Maui Architecture + Design</strong>, a boutique, full-service architecture and design practice based on Maui. We build careful, locally grounded projects — and we think the permitting process should be less opaque than it is.</p>
+      <div class="fine">
+        <a href="mailto:studio@oenmaui.com">studio@oenmaui.com</a>
+        <span>·</span>
+        <a href="https://oenmaui.com">oenmaui.com</a>
+        <span>·</span>
+        <a href="https://github.com/oen-maui/maui-permit-checklists/discussions">Report an issue on GitHub</a>
+        <span>·</span>
+        Reviewed quarterly
+        <span>·</span>
+        Licensed in the State of Hawaiʻi
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

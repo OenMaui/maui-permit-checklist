@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oʻen Maui Architecture + Design — Building Permit Submission Checklist</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #f5f0e8;
+      --ocean:   #1a4a5c;
+      --teal:    #2a7a8c;
+      --coral:   #c85a3a;
+      --gold:    #c8973a;
+      --sage:    #5a7a5c;
+      --light:   #f9f7f4;
+      --border:  #ddd8ce;
+      --text:    #2a2420;
+      --muted:   #7a6e64;
+      --flag:    #fff3e0;
+      --flag-b:  #e65100;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ── CHANGE LOG BANNER ─────────────────────── */
+    .change-banner {
+      background: #fffbeb;
+      border: 1.5px solid #f59e0b;
+      border-radius: 7px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      line-height: 1.6;
+    }
+    .change-banner .cb-title {
+      font-weight: 700;
+      font-size: 12px;
+      color: #92400e;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .change-banner ul {
+      margin: 4px 0 0 18px;
+      color: #78350f;
+    }
+
+    /* ── UPDATED TAG ───────────────────────────── */
+    .tag.updated { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+
+    /* ── INFO BOX ──────────────────────────────── */
+    .info-box {
+      background: #f0f9ff;
+      border-left: 3px solid #0ea5e9;
+      border-radius: 0 5px 5px 0;
+      padding: 9px 13px;
+      margin: 6px 0 4px 0;
+      font-size: 11px;
+      color: #0c4a6e;
+      line-height: 1.55;
+    }
+    .info-box strong { font-weight: 600; }
+
+    /* ── PITFALL BOX ───────────────────────────── */
+    .pitfall-box {
+      background: #fef2f2;
+      border-left: 3px solid #ef4444;
+      border-radius: 0 5px 5px 0;
+      padding: 8px 12px;
+      margin: 5px 0 3px 0;
+      font-size: 11px;
+      color: #7f1d1d;
+      line-height: 1.5;
+    }
+
+    /* ── PRINT ─────────────────────────────────── */
+    @media print {
+      body { background: white; font-size: 11px; }
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      .section { break-inside: avoid; }
+      header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    /* ── HEADER ────────────────────────────────── */
+    header {
+      background: var(--ocean);
+      color: white;
+      padding: 28px 40px 22px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    header .firm {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+    header .firm span {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 4px;
+    }
+    header .doc-meta {
+      text-align: right;
+      font-size: 11px;
+      opacity: 0.8;
+      line-height: 1.7;
+    }
+    header .doc-title {
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── INTRO ─────────────────────────────────── */
+    .intro {
+      background: var(--teal);
+      color: white;
+      padding: 12px 40px;
+      font-size: 11.5px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .intro strong { font-weight: 600; }
+    .badge {
+      background: rgba(255,255,255,0.18);
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-size: 10.5px;
+      white-space: nowrap;
+    }
+
+    /* ── MAIN LAYOUT ───────────────────────────── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* ── PROJECT INFO BAR ──────────────────────── */
+    .project-bar {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px 24px;
+    }
+    .project-bar .field label {
+      display: block;
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+    .project-bar .field .val {
+      border-bottom: 1.5px solid var(--border);
+      min-height: 22px;
+      font-size: 12.5px;
+      padding-bottom: 2px;
+    }
+
+    /* ── LEGEND ────────────────────────────────── */
+    .legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      font-size: 11px;
+      color: var(--muted);
+      align-items: center;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot.required  { background: var(--ocean); }
+    .dot.frequent  { background: var(--coral); }
+    .dot.conditional { background: var(--gold); }
+
+    /* ── SECTION ───────────────────────────────── */
+    .section {
+      margin-bottom: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .section-header {
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-header .sec-icon {
+      font-size: 16px;
+      width: 28px;
+      text-align: center;
+    }
+    .section-header .sec-title {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      flex: 1;
+    }
+    .section-header .sec-count {
+      font-size: 10.5px;
+      opacity: 0.7;
+    }
+
+    /* Section color themes */
+    .s-admin   .section-header { background: #1a4a5c; color: white; }
+    .s-site    .section-header { background: #2a5c3a; color: white; }
+    .s-arch    .section-header { background: #3a5c7a; color: white; }
+    .s-struct  .section-header { background: #5c3a2a; color: white; }
+    .s-energy  .section-header { background: #7a5c1a; color: white; }
+    .s-mep     .section-header { background: #5c2a5c; color: white; }
+    .s-civil   .section-header { background: #2a5c5c; color: white; }
+    .s-agency  .section-header { background: #5c4a1a; color: white; }
+    .s-flag    .section-header { background: #c85a3a; color: white; }
+
+    /* ── CHECKLIST ITEM ────────────────────────── */
+    .items { padding: 4px 0; }
+    .item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      align-items: start;
+      border-top: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .item:hover { background: var(--light); }
+    .item:first-child { border-top: none; }
+
+    .item .cb {
+      padding: 9px 0 9px 14px;
+      display: flex;
+      align-items: flex-start;
+      padding-top: 11px;
+    }
+    .item input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      border: 2px solid #aaa;
+      border-radius: 3px;
+      cursor: pointer;
+      accent-color: var(--ocean);
+      flex-shrink: 0;
+    }
+
+    .item .body {
+      padding: 9px 16px 9px 2px;
+    }
+    .item .body .main-text {
+      font-size: 12.5px;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .item .body .note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .item .body .flag-note {
+      font-size: 11px;
+      color: var(--flag-b);
+      margin-top: 2px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+    .tag.req  { background: #dbeafe; color: #1d4ed8; }
+    .tag.flag { background: #fee2e2; color: #b91c1c; }
+    .tag.cond { background: #fef3c7; color: #92400e; }
+    .tag.shpd { background: #ede9fe; color: #5b21b6; }
+    .tag.sma  { background: #d1fae5; color: #065f46; }
+    .tag.xref { background: #ecfdf5; color: #065f46; border: 1px dashed #10b981; }
+
+    /* Sub-header within section */
+    .sub-head {
+      padding: 7px 16px 4px 52px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      background: var(--light);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 24px 40px;
+      color: var(--muted);
+      font-size: 10.5px;
+      border-top: 1px solid var(--border);
+    }
+    footer .refs {
+      margin-top: 8px;
+      line-height: 1.8;
+    }
+
+    /* ── PRINT BUTTON ──────────────────────────── */
+    .print-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .print-bar .instructions {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .btn {
+      background: var(--ocean);
+      color: white;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn:hover { background: var(--teal); }
+    .btn-clear {
+      background: white;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-clear:hover { background: var(--light); }
+  </style>
+</head>
+<body>
+
+<!-- ════════ SITE CHROME (community checklists wrapper) ════════ -->
+<style>
+  .ckx-bar {
+    max-width: 900px;
+    margin: 0 auto 16px;
+    padding: 18px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+  }
+  .ckx-back { color: #1a4a5c; text-decoration: none; font-weight: 600; }
+  .ckx-back:hover { color: #2a7a8c; text-decoration: underline; }
+  .ckx-back::before { content: "← "; color: #2a7a8c; }
+  .ckx-home { color: #7a6e64; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+  .ckx-home:hover { color: #2a7a8c; }
+  .ckx-disclaimer {
+    max-width: 900px;
+    margin: 0 auto 22px;
+    padding: 18px 22px;
+    background: #fdf6e3;
+    border-left: 6px solid #c08a3e;
+    border-top: 1px solid #e6d8a8;
+    border-right: 1px solid #e6d8a8;
+    border-bottom: 1px solid #e6d8a8;
+    border-radius: 6px;
+    color: #7a5220;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .ckx-disclaimer .ckx-dh {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .ckx-disclaimer p { margin: 0 0 6px; }
+  .ckx-disclaimer p:last-child { margin-bottom: 0; }
+  .ckx-disclaimer a { color: #7a5220; text-decoration: underline; }
+  @media print {
+    .ckx-bar, .ckx-disclaimer { display: none !important; }
+  }
+</style>
+<nav class="ckx-bar">
+  <a class="ckx-back" href="../index.html">Maui Permit Checklists</a>
+  <a class="ckx-home" href="https://oenmaui.com">oenmaui.com ↗</a>
+</nav>
+<aside class="ckx-disclaimer" aria-label="Please read before using this checklist">
+  <div class="ckx-dh">Please read before using this checklist</div>
+  <p>This is an educational summary of publicly available Maui County and State of Hawaiʻi permitting requirements, published by Oʻen Maui Architecture + Design as a community resource. It is provided as-is, without warranty of any kind — not legal advice, engineering advice, or official regulatory guidance.</p>
+  <p>Rules change. Before you rely on any item for a submission, confirm it against the current published requirement from the relevant agency. Found an error? <a href="https://github.com/oen-maui/maui-permit-checklists/discussions">Let us know on GitHub</a> or email <a href="mailto:studio@oenmaui.com?subject=Maui%20Permit%20Checklists%20%E2%80%94%20feedback">studio@oenmaui.com</a>.</p>
+</aside>
+<!-- ════════ END SITE CHROME ════════ -->
+
+<!-- HEADER -->
+<header>
+  <div class="firm">
+    <span>Architecture + Design</span>
+    Oʻen Maui
+  </div>
+  <div class="doc-meta">
+    <div class="doc-title">Building Permit Submission Checklist</div>
+    County of Maui DSA — New Residential Construction<br>
+    Codes: 2018 IBC + 2018 IECC (eff. Oct 28, 2023)<br>
+    Rev. April 2026 — v1.4
+  </div>
+</header>
+
+<!-- INTRO BAND -->
+<div class="intro">
+  <strong>Purpose:</strong> Use this checklist before every permit submittal to minimize plan review comments and delays.
+  <span class="badge">🔴 Frequently flagged by DSA reviewers</span>
+  <span class="badge">🟡 Conditional / project-dependent</span>
+  <span class="badge">🟣 SHPD / historic review</span>
+  <span class="badge">🟢 SMA zone only</span>
+</div>
+
+<!-- PRINT BAR -->
+<div class="print-bar no-print">
+  <span class="instructions">Check off items as you confirm them. Print or export to PDF via File → Print.</span>
+  <div style="display:flex;gap:8px;">
+    <button class="btn btn-clear" onclick="clearAll()">Clear All</button>
+    <button class="btn" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- PROJECT INFO -->
+  <div class="project-bar">
+    <div class="field"><label>Project Name</label><div class="val"></div></div>
+    <div class="field"><label>Address</label><div class="val"></div></div>
+    <div class="field"><label>TMK</label><div class="val"></div></div>
+    <div class="field"><label>Permit No. (if known)</label><div class="val"></div></div>
+    <div class="field"><label>Architect of Record</label><div class="val"></div></div>
+    <div class="field"><label>Submission Date</label><div class="val"></div></div>
+    <div class="field"><label>Prepared by</label><div class="val"></div></div>
+    <div class="field"><label>Reviewer / Checker</label><div class="val"></div></div>
+    <div class="field"><label>Submission Type</label><div class="val"></div></div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend no-print">
+    <div class="legend-item"><div class="dot required"></div> Required by DSA</div>
+    <div class="legend-item"><div class="dot frequent"></div> Frequently flagged</div>
+    <div class="legend-item"><div class="dot conditional"></div> Conditional / situational</div>
+  </div>
+
+
+  <!-- CHANGE LOG -->
+  <div class="change-banner no-print">
+    <div class="cb-title">📋 Change Log</div>
+    <ul>
+      <li><strong>v1.4 (Apr 2026) — Bidirectional Cross-Referencing with SMA Permit Checklist:</strong> Added sister-document cross-references (↔ SMA Phase X) inline on every Site Plan, Civil/Grading, and Agency Approval item that has a matching task in the Oʻen Maui — Maui SMA Permit Checklist. New dashed-green <code>XREF</code> tag class introduced. Section 12 Frequently Flagged now includes an explicit SMA-sync QC item. Use alongside the SMA Permit Checklist so coastal, SHPD, flood, and SMA-permit tasks are tracked in both documents without duplication. No regulatory changes in this revision.</li>
+      <li><strong>v1.3 (Apr 2026) — Building Separation: Same-Lot Structures (new Section 7):</strong> Legacy 10/15/20 ft spacing rule superseded by MCC Chapter 16.26C (Ord. 5508, eff. Oct 28, 2023), which adopts 2018 IBC imaginary-line / Fire Separation Distance (FSD) methodology per IBC §§ 503.1.2 and 705.3. New Section 7 includes: rule-change notice, 8-step analysis framework, FSD band table (wall ratings and opening limits by distance), and special conditions for ADUs, Group U, zero-lot-line, and fire-code-required separations. Five new items added to Frequently Flagged (Section 12). Sections renumbered 1–13. Source: DPW internal memo Apr 10, 2026; verified against MCC Municode and 2018 IBC adoption records.</li>
+      <li><strong>v1.2 (Apr 2026) — Electronic Submission via MAPPS (Section 1 &amp; new Section 2):</strong> Paper plan sets eliminated since MAPPS launch Apr 18, 2022. All submittals are OCR PDF uploaded through MAPPS CSS. Section 1 plan-set quantities removed; new Section 2 covers all MAPPS digital submission standards (file format, size, resolution, bookmarking, naming, title block county stamp area, and resubmittal transmittal form).</li>
+      <li><strong>v1.1 (Apr 2026) — Water Demand / DWS (Sections 7 &amp; 9):</strong> Water Meter Sizing Worksheet no longer applicant-submitted. DWS calculates demand internally. Bedroom count and fixture schedule on plans are now the critical inputs.</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 1. ADMINISTRATIVE & FORMS                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-admin">
+    <div class="section-header">
+      <div class="sec-icon">📋</div>
+      <div class="sec-title">1 — Administrative &amp; Forms</div>
+      <div class="sec-count">Complete before submittal</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">PS-Forms (Building Permit Application Package)</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form A</strong> — Application for Building Permit: fully completed, signed, dated</div>
+          <div class="note">Include project name, address, TMK, scope of work, construction value, and contact information for owner, contractor, and design professional.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form B</strong> — Owner's Agent Authorization: design professional / architect authorized to submit on owner's behalf</div>
+          <div class="note">Required when the architect/design firm is submitting on behalf of the owner. Use the "Letter of Authorization to Obtain a Building Permit" (mauicounty.gov DID=8636) if PS-Form B is not used. Confirm which form DSA currently accepts for design professional authorization.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form C</strong> — Included and completed</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form D</strong> — Contractor / Owner-Builder Declaration: confirm which section applies</div>
+          <div class="note">Section A: licensed contractor performing work. Section B: Owner-Builder Disclosure (owner acts as own GC — verify eligibility, must personally supervise, licensed subs required).</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form E</strong> — Special Inspections Form: completed (required for each building permit)</div>
+          <div class="note">Based on 2018 IBC / 2012 IBC Section 1705. Identify which special inspections are required and name the special inspector / inspection agency.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Forms F, G, H</strong> — Included and completed as applicable</div>
+          <div class="note">Commercial projects require all PS-Forms A–H. Residential: A–E and H. Confirm current requirements with DSA at time of submittal.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Ownership &amp; Authorization</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Owner authorization confirmed — ownership record matches DSA's file (LLC name, trustee name, or individual owner)</div>
+          <div class="flag-note">⚠ Flag: If property has changed ownership since prior permit applications, a new owner authorization form and proof of ownership transfer must be submitted to DSA before processing.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Ownership transfer documentation provided (deed, LLC operating agreement, trustee certification) if ownership has changed since previous permit applications</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Contractor / License Verification</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>General Contractor license number verified as active with Hawaii DCCA (dcca.hawaii.gov/pvl)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Contractor's Certificate of Insurance on file</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Contractor's license number shown on permit application</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Plan Set Submission Method</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span>All plans and documents submitted electronically via <strong>MAPPS Customer Self-Service (CSS)</strong> portal — mapps.mauicounty.gov</div>
+          <div class="info-box"><strong>No paper plan sets required.</strong> The County of Maui eliminated paper submissions when MAPPS launched on April 18, 2022. All new permit and plan review applications — including all supporting documents — must be submitted online through MAPPS CSS. See Section 2 below for complete digital file standards.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 2. MAPPS DIGITAL SUBMISSION STANDARDS     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-admin">
+    <div class="section-header">
+      <div class="sec-icon">💻</div>
+      <div class="sec-title">2 — MAPPS Digital File &amp; Submission Standards</div>
+      <div class="sec-count">All files uploaded via MAPPS CSS portal</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">File Format</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All plan sheets saved as <strong>OCR (Optical Character Recognition / searchable) PDF</strong> — not image-only scans</div>
+          <div class="note">OCR PDF means text in the file is selectable and searchable. Export directly from CAD/BIM software to PDF rather than scanning printed sheets wherever possible.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All non-plan documents (reports, forms, letters) also in OCR PDF format</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Pages oriented <strong>upright / landscape</strong> — rotated so sheets read correctly when printed in landscape format; 8.5"×11" sheets in portrait</div>
+          <div class="flag-note">⚠ Frequent issue: Sheets uploaded sideways or inverted — rotate all pages before exporting.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Save files in <strong>black and white</strong> (not color or grayscale) to reduce file size</div>
+          <div class="note">Color files can balloon to 10× the size of equivalent B&amp;W files. Use B&amp;W export setting in AutoCAD/Revit PDF output. Exception: colored drawings or renderings where color is essential to communication.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Resolution: <strong>minimum 150 dpi — maximum 300 dpi</strong></div>
+          <div class="note">Below 150 dpi is illegible for plan review. Above 300 dpi inflates file size unnecessarily. Target 200–300 dpi for plan sheets; 150 dpi for text-heavy documents like reports.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Sheet Size</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Architectural / structural plan sheets: <strong>maximum 30"×42"</strong> format</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Civil / grading plan sheets: <strong>maximum 24"×36"</strong> format</div>
+        </div>
+      </div>
+
+      <div class="sub-head">File Organization &amp; Size</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All plan sheets combined into <strong>one complete plan set PDF</strong> — no individual sheet uploads</div>
+          <div class="note">Upload the full set as a single file. Individual sheet uploads are not accepted. Civil drawings may be uploaded as a separate set if a separate grading/civil permit is being filed.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Single plan set file size: <strong>100 MB maximum per upload</strong></div>
+          <div class="info-box"><strong>If your set exceeds 100 MB:</strong> Split into multiple uploads using one of these two approaches:
+            <br>• By volume: "Plan Set 1 of 2," "Plan Set 2 of 2"
+            <br>• By discipline: "Architectural Plans," "Structural Plans," "Electrical Plans," "Civil Plans"
+            <br>Label each file clearly so reviewers understand the split.
+          </div>
+          <div class="note">Typical causes of oversized files: color PDFs, raster images embedded in sheets, resolution above 300 dpi, scanned pages. Resolve before upload.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Bookmarks &amp; Navigation</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Every plan sheet bookmarked</strong> in the PDF — bookmark text identifies the sheet content</div>
+          <div class="info-box">Format example: "A1.0 Architectural Site Plan" · "A2.1 Floor Plan Level 1" · "S1.0 Foundation Plan" · "E1.0 Electrical Plan"
+            <br>Bookmarks allow reviewers to navigate directly to any sheet. Missing bookmarks are a common reason for upload rejection or reviewer complaints.
+          </div>
+          <div class="flag-note">⚠ Frequent issue: Plan sets uploaded with no bookmarks or bookmarks that only say "Page 1," "Page 2." Set up auto-bookmarking from sheet number/title in your CAD/BIM export settings.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">File Naming</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>File names use <strong>only letters (a–z) and numbers (0–9)</strong> — no special characters, no spaces, no hyphens or underscores if possible</div>
+          <div class="note">Special characters (/, \, #, &amp;, %, parentheses, etc.) can cause upload failures in MAPPS. Safe examples: "ConstructionPlans.pdf" · "StructuralPlans.pdf" · "CivilGradingPlans.pdf"</div>
+          <div class="flag-note">⚠ Common failure: Files named with project address (slashes, commas) or revision dates (hyphens) trigger upload errors.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Title Sheet Requirements</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>County stamp area reserved on title sheet</strong> — leave a blank block (typically lower right or lower left) for DSA to apply permit stamps electronically</div>
+          <div class="flag-note">⚠ Frequent issue: Drawings that fill the title block to every corner leave no space for County stamps — reviewer must request a revised title sheet.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Graphic scale bar on all plan sheets (in addition to noted scale) — required so plans print to correct scale from PDF</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Resubmittals</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Resubmittals: include a <strong>Building Permit Transmittal Form</strong> (or written response letter) detailing every change made in the revised plan set</div>
+          <div class="note">List each reviewer comment, the sheet number(s) where the correction was made, and a brief description of the change. Cloud / delta markers on revised sheets are strongly recommended.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Resubmittals: revised sheets marked with revision clouds and delta triangles with revision number and date</div>
+          <div class="flag-note">⚠ Frequent issue: Resubmitted plans with no clouds — reviewer cannot identify what changed and may reject or delay the resubmittal.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 2. GENERAL PLAN REQUIREMENTS              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-arch">
+    <div class="section-header">
+      <div class="sec-icon">🏛</div>
+      <div class="sec-title">3 — General Plan Standards (All Sheets)</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All plans drawn to a recognized scale; scale bar shown on each sheet</div>
+          <div class="flag-note">⚠ Frequent flag: Scale bar missing or inconsistent between sheets.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Design professional's stamp (seal), signature, date of signature, and license expiration date on all sheets requiring professional certification</div>
+          <div class="flag-note">⚠ Frequent flag: Expiration date missing from stamp; or stamp present but no signature or date.</div>
+          <div class="note">HRS Chapter 464 requires licensed Hawaii architect or engineer of record.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Stamp language includes "preparation or supervision and observation" statement per state law</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All referenced code sections cite the <strong>currently adopted codes</strong>: 2018 IBC (Maui amendments) and 2018 IECC (Maui amendments), effective October 28, 2023</div>
+          <div class="flag-note">⚠ Frequent flag: Plans reference 2012 or 2015 IBC — current adopted code is 2018 IBC.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Title block on every sheet: project name, project address, TMK, sheet number, revision date(s), sheet title</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Occupancy Group</strong> designation labeled on plans (e.g., R-3 for single-family dwelling; U for accessory structures)</div>
+          <div class="flag-note">⚠ Frequent flag: Occupancy Group not labeled anywhere on plans.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Type of Construction</strong> labeled on plans (e.g., Type V-B)</div>
+          <div class="flag-note">⚠ Frequent flag: Construction type omitted.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Energy Code Certification Block</strong> present on architectural, mechanical, and electrical sheets (when designed by a design professional)</div>
+          <div class="flag-note">⚠ Frequent flag: Energy Code Certification Block is missing — one of the top plan check corrections.</div>
+          <div class="note">Exception: not required for fences, retaining walls not part of a building, temporary structures, ground-mounted PV systems, or permits not requiring design professional.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Sheet index / drawing list on cover sheet</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Vicinity / location map on cover sheet</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 3. SITE PLAN                              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-site">
+    <div class="section-header">
+      <div class="sec-icon">🗺</div>
+      <div class="sec-title">4 — Site Plan</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>North arrow shown</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Project name, address, TMK, and legal description on site plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All property lines shown with dimensions; lot area stated</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All existing and proposed structures located and labeled; existing structures include prior permit numbers where known</div>
+          <div class="flag-note">⚠ Frequent flag: Existing structures shown without prior permit reference numbers.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Setbacks</strong> from all property lines to all structures dimensioned</div>
+          <div class="flag-note">⚠ Frequent flag — top correction: Setbacks not dimensioned, or building encroaches into setback.</div>
+          <div class="note">Typical residential zones (R-1/R-2/R-3): 6 ft side and rear minimum; elements over 15 ft tall must maintain 10 ft side/rear setback. D-1/D-2: 6 ft sides; 20 ft rear. Verify your specific zoning district requirements.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Separation distances between all structures dimensioned (building to building)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Spot elevations shown at key grade points; existing and proposed contours shown</div>
+          <div class="flag-note">⚠ Frequent flag: No contours or spot elevations on site plan.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Site drainage direction shown — drainage directed <strong>away from building</strong></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All easements shown and labeled (drainage, utility, access, etc.)</div>
+          <div class="flag-note">⚠ Frequent flag: Easements omitted from site plan.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Utilities shown: water service, sewer/septic/cesspool location, electrical service entry, gas (if applicable)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Sewer cleanout or cesspool/septic location shown</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Driveway and parking areas shown; dimensions provided</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Impervious surface area calculation</strong> shown on site plan — confirm does not exceed <strong>65% of lot area</strong></div>
+          <div class="flag-note">⚠ Frequent flag: Impervious surface calculation missing or exceeds allowable maximum.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Adjacent streets and rights-of-way labeled</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><span class="tag xref">↔ SMA Phase 4</span>Flood zone designation noted (FEMA FIRM map reference); if in flood zone, base flood elevation shown and first-floor elevation compliance demonstrated</div>
+          <div class="note">↔ SMA Permit Checklist Phase 4 — Flood Development Permit (if in flood zone). Confirm Flood Development Permit application status in sister checklist.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag sma">SMA</span><span class="tag xref">↔ SMA Phase 1 · 3 · 4</span>SMA zone: coastal setback from shoreline shown; all vegetation and significant natural features shown</div>
+          <div class="note">↔ SMA Permit Checklist — Phase 1 (due-diligence overlay), Phase 3 (Assessment site-plan submission), Phase 4 (SSAD/SSV shoreline setback). If property is within the Special Management Area, SMA Minor or Major Permit must be obtained before building permit can issue.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag shpd">SHPD</span><span class="tag xref">↔ SMA Phase 4</span>Archaeological site boundaries, buffer zones, and historic preservation easements shown if applicable; any SHPD-required setbacks from archaeological features dimensioned</div>
+          <div class="note">↔ SMA Permit Checklist Phase 4 — AIS / SHPD consultation. If SMA Major, an AIS is typically required as part of the impact analysis before the SMA permit is issued.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 4. ARCHITECTURAL DRAWINGS                 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-arch">
+    <div class="section-header">
+      <div class="sec-icon">📐</div>
+      <div class="sec-title">5 — Architectural Drawings</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">Floor Plans</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Floor plans for all levels — fully dimensioned</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All rooms and spaces labeled by name/use</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Door and window schedules (or sizes labeled on plan); openings keyed to schedule</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Smoke alarm locations</strong> shown on floor plan</div>
+          <div class="flag-note">⚠ Frequent flag: Smoke alarm locations not shown.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Carbon monoxide alarm locations</strong> shown on floor plan</div>
+          <div class="flag-note">⚠ Frequent flag: CO alarm locations omitted.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Floor area calculations for each level; total gross floor area stated</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>One kitchen per dwelling unit</strong> — wet bar sinks confirmed as small (bar sink, not full-size kitchen sink); a second full kitchen sink triggers a second-unit review</div>
+          <div class="flag-note">⚠ Frequent flag: Oversized wet bar sink interpreted as second kitchen — creates two-unit compliance issues.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Accessible route, accessible parking, and accessible features shown if required (ADA / Fair Housing)</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Elevations</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All four exterior elevations shown (North, South, East, West)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Building height from grade to ridge dimensioned on elevations</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Finished grade and natural grade reference lines shown; grade used for height measurement identified</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Exterior materials labeled on elevations</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All openings (windows, doors, garage doors) shown and keyed to schedule</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Sections &amp; Details</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Building cross-section(s) showing full height from footing to ridge</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Typical wall section(s) with insulation type and R-values labeled</div>
+          <div class="flag-note">⚠ Frequent flag: Insulation R-values not shown on wall sections — energy code non-compliance.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Eave and soffit details; roof-to-wall interface shown</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Door and window head, sill, and jamb details (weather-tightness)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Pool / spa plan and section with barrier / fencing details (if applicable)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Retaining wall plan and cross-section with height, material, and drainage (if applicable)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 5. STRUCTURAL DRAWINGS                    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-struct">
+    <div class="section-header">
+      <div class="sec-icon">🏗</div>
+      <div class="sec-title">6 — Structural Drawings &amp; Calculations</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Structural engineer of record stamp, signature, and expiration date on all structural sheets</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Foundation plan: footing sizes, depths, widths; foundation type clearly identified (slab-on-grade, raised, drilled piers, etc.)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Allowable soil bearing pressure from soils report referenced on foundation plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Anchor bolt locations, diameter, embedment depth, and spacing shown on foundation plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Floor and roof framing plans with all members, spans, and sizes labeled</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Beam, column, and post schedule with sizes and species/grade (lumber) or designation (steel/glulam)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Shear wall schedule and locations; hold-down hardware called out</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Wind uplift hardware</strong> called out at all roof-to-wall connections; Simpson or equivalent connectors specified</div>
+          <div class="note">Maui is a High Wind / Hurricane zone — continuous load path from roof to foundation must be demonstrated.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Structural connection details at all critical joints; nailing schedule</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Design loads stated on drawings: dead load, live load, wind speed and exposure category, seismic design category</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Structural calculations provided (may be requested by plan reviewer for complex structures)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Soils / geotechnical report — 2 copies submitted (required where DSA requests or project conditions warrant)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 7. BUILDING SEPARATION — SAME-LOT         -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-struct">
+    <div class="section-header">
+      <div class="sec-icon">📏</div>
+      <div class="sec-title">7 — Building Separation: Same-Lot Structures</div>
+      <div class="sec-count">MCC Ch. 16.26C (Ord. 5508) · IBC 2018 §§ 503.1.2, 705.3</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span><strong>Do NOT apply the legacy 10 ft / 15 ft / 20 ft spacing rule</strong> — it is superseded under current Maui code</div>
+          <div class="info-box">
+            <strong>Rule change — MCC Ch. 16.26C (Ord. 5508), effective Oct 28, 2023:</strong><br>
+            The former fixed-spacing formula (Sec. 12-4.16 / former IRC R302.2) has been repealed and replaced. The current controlling framework is the <strong>2018 IBC fire separation distance / imaginary line methodology</strong> as locally amended.<br><br>
+            <strong>Legacy (superseded):</strong> 1-story to 1-story = 10 ft · 1-story to 2+ story = 15 ft · 2+ story to 2+ story = 20 ft<br>
+            <strong>Current:</strong> Classify structures → establish imaginary line on site plan → measure FSD → apply amended Table 602 for wall ratings, opening limits, and projections.
+          </div>
+          <div class="flag-note">⚠ Critical: Plans citing only the legacy 10/15/20 ft formula will be flagged by DPW Plan Review. Do not rely on the old rule without explicit building official confirmation.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">8-Step Analysis — Required for All Same-Lot Multi-Structure Projects</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Step 1 — Classify structures:</strong> Determine whether multiple structures are treated as (a) separate buildings or (b) portions of one building — IBC § 503.1.2</div>
+          <div class="note">If treating as one building: combined height, stories, and aggregate area must comply with Chapter 5 limits for a single building (construction type + occupancy). Document and note the basis on drawings.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Step 2 — Show the Imaginary Line on the site plan</strong> between structures — IBC § 705.3</div>
+          <div class="info-box">Imaginary line placement is the designer's choice — but once established it applies to both structures simultaneously and cannot be moved without re-analyzing both. When adding a new structure next to an existing building, the line must be positioned so the <em>existing</em> building also comes into compliance with §§ 705.5 and 705.8.</div>
+          <div class="flag-note">⚠ Frequent flag: Imaginary line not shown on site plan — DPW cannot complete the separation analysis without it. Label it clearly on the site plan.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Step 3 — Dimension Fire Separation Distance (FSD)</strong> from each building's exterior wall face, measured perpendicular to the imaginary line</div>
+          <div class="note">Distance is perpendicular — not diagonal. On irregular lots or non-parallel walls, FSD may vary along a wall face; Table 602 requirements apply at each measured point. Label all FSD dimensions on site plan.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Step 4 — Apply amended MCC Table 602 (§ 16.26C.602)</strong> to determine required exterior wall fire-resistance rating</div>
+          <div class="info-box">
+            <strong>FSD bands — fire-resistance ratings (MCC-amended Table 602):</strong><br>
+            &lt; 5 ft &nbsp;&nbsp;&nbsp;→ 2–3 hr rating · No unprotected openings · Projections prohibited within 40" of line<br>
+            5 ft – &lt;10 ft → 1 hr rating · Protected openings only · Load-bearing walls also check Table 601<br>
+            10 ft – &lt;30 ft → 0–1 hr (varies by construction type) · Opening area may be limited per Table 705.8<br>
+            ≥ 30 ft &nbsp;&nbsp;→ 0 hr (non-rated) · No FSD-based wall rating required; Table 601 structural reqs still apply<br><br>
+            Cross-check load-bearing walls against Table 601 — use the more restrictive rating.
+          </div>
+          <div class="note">Group U (garages, carports) and Group R-3 Type IIB/V-B at FSD ≥ 5 ft may be exempt from exterior wall rating under Table 602 notes — confirm with building official.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Step 5 — Check Opening Limitations</strong> per IBC Table 705.8: maximum allowable % of exterior wall openings (windows, doors, louvers) at applicable FSD — annotate on affected elevations</div>
+          <div class="note">At FSD &lt; 3 ft: no openings generally permitted. NFPA 13 sprinkler system may allow use of "protected" column values.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Step 6 — Check Projection Limitations</strong> per IBC § 705.2: projections (balconies, overhangs, canopies, eaves) shall not extend within 40" of the imaginary line at FSD ≥ 5 ft; prohibited entirely at FSD &lt; 5 ft</div>
+          <div class="flag-note">⚠ Frequent flag: Roof overhangs and lanai/balcony overhangs near the imaginary line violate the 40" projection limit. Check all eaves and overhangs on affected elevations before submittal.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Step 7 — No-Build Area Easement (if used):</strong> formally recorded with Bureau of Conveyances before permit issuance — declaration of restriction, metes and bounds survey, or approved subdivision plat — MCC § 16.26C.202</div>
+          <div class="note">Easement may contain: parking, utilities, slabs, sidewalks, and minor structures. Principal or accessory structures may not be built within it. Reference and label the easement on the site plan.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Step 8 — Plan annotations:</strong> imaginary line, all FSD dimensions, wall rating designations, opening percentage calculations, and projection compliance notes shown on site plan and affected elevation/wall section drawings</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Special Conditions</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>ADUs / Ohana Units (Group R-3 per MCC § 16.26C.310):</strong> full IBC same-lot framework applies — confirm FSD to main house and exterior wall ratings; bed-and-breakfast / STR homes governed by MCC § 16.26C.310.4.3 / IRC</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Garages / Carports (Group U, MCC § 16.26C.312):</strong> at FSD ≥ 5 ft may be exempt from wall rating; carports must be open on ≥ 2 sides with ≥ 1 side 100% open (MCC § 16.26C.406.3.3) — carports not meeting this are classified as garages</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Zero Lot Line (R-0):</strong> MCC § 16.26C.705.1 recognizes R-0 provisions — actual recorded property line governs FSD (not imaginary line); consult Title 19 MCC zoning</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Maui Fire Prevention Bureau coordination required</strong> when: FSD &lt; 10 ft to imaginary line or lot line · New ADU / second structure within 10 ft of existing building · NFPA 13 or 13D sprinkler triggers apply (MCC § 16.26C.903)</div>
+          <div class="note">Fire code (MCC Ch. 16.04C / NFPA 1) may also require: fire apparatus access road width and turning radii; hydrant placement and water supply for rated walls; automatic fire sprinklers where FSD or occupancy triggers NFPA 13/13D.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 8. ENERGY CODE (2018 IECC + MAUI AMD)     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-energy">
+    <div class="section-header">
+      <div class="sec-icon">⚡</div>
+      <div class="sec-title">8 — Energy Code Compliance (2018 IECC + Maui Amendments)</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Energy Code Certification Block</strong> on architectural, mechanical, and electrical sheets</div>
+          <div class="flag-note">⚠ Top frequent flag — missing Energy Code Certification Block.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Window and glazing <strong>Solar Heat Gain Coefficient (SHGC) ≤ 0.25</strong> — specified in window schedule or on plans</div>
+          <div class="flag-note">⚠ Frequent flag: SHGC not specified, or exceeds 0.25 maximum.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Window U-factor specified; confirm compliance with 2018 IECC Maui climate zone requirements</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Roof / ceiling insulation R-value shown on wall sections and/or details</div>
+          <div class="flag-note">⚠ Frequent flag: Insulation values not indicated on drawings.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Wall insulation R-value shown on typical wall section</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Lighting efficiency:</strong> not less than <strong>90% of permanently installed fixtures</strong> contain only high-efficacy lamps — noted on electrical/lighting plan</div>
+          <div class="flag-note">⚠ Frequent flag: 90% high-efficacy lighting requirement not addressed on plans.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Solar water heater</strong> or compliance alternative documented — Hawaii law requires solar water heating on new residential construction (exceptions must be noted)</div>
+          <div class="flag-note">⚠ Frequent flag: Solar water heater requirement not addressed; exception not documented.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Air sealing measures described or detailed (blower door or prescriptive air sealing approach)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Mechanical ventilation design if building is tightly sealed; fresh air intake noted</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 7. MEP DRAWINGS                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-mep">
+    <div class="section-header">
+      <div class="sec-icon">🔌</div>
+      <div class="sec-title">9 — Mechanical, Electrical &amp; Plumbing (MEP)</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">Electrical</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Electrical / lighting plan (preferred as separate sheet from architectural plans)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Panel schedule (load calculation, main panel size, breaker schedule)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Smoke alarm locations cross-referenced on electrical plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Carbon monoxide alarm locations cross-referenced on electrical plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>AFCI and GFCI protection locations identified and code-compliant per 2018 NEC</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Photovoltaic (PV) solar system: one-line diagram, racking/mounting details, interconnection method, and utility approval if required</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Mechanical</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>HVAC layout or mechanical plan showing unit locations, duct routing, and equipment specifications (if mechanical system included)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Water heater location, type, and capacity shown; solar water heater or exception documented</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Kitchen and bathroom exhaust ventilation shown and ducted to exterior</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Plumbing &amp; Water Demand</div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span><strong>Bedroom count clearly labeled on all floor plans</strong> — every bedroom identified unambiguously</div>
+          <div class="info-box"><strong>Why this matters now:</strong> DWS no longer uses an applicant-submitted worksheet. Bedroom count is the primary driver of water demand calculation — DWS and Plan Review use your drawings as the input. If it can function as a bedroom (closet + egress window + adjacent bath), it will be counted as one.</div>
+          <div class="pitfall-box">⚠ Pitfall: "Bonus rooms," dens, offices, and flex rooms with closets and egress windows may be interpreted as bedrooms by DWS/Plan Review. Label ambiguous rooms explicitly (e.g., "Home Office — No Closet") or accept that they will be counted.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span><strong>Plumbing Fixture Schedule on plans</strong> — clearly listing all fixtures by type and count</div>
+          <div class="info-box">Include totals for: toilets (WCs) · lavatories · showers / tubs · kitchen sinks · bar / prep sinks · hose bibs · laundry connections · outdoor showers. Show on plumbing plan or as a dedicated fixture count table. This is the secondary check DWS uses to validate bedroom-based demand.</div>
+          <div class="pitfall-box">⚠ Pitfall: Missing hose bibs, outdoor showers, or bar sinks frequently triggers resubmittal comments. Count every water-using fixture, including exterior ones.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span><strong>Water Demand Summary block on plans</strong> — include a simple table summarizing inputs for DWS</div>
+          <div class="info-box">Recommended format on plans:<br>
+            &nbsp;&nbsp;• Total Bedrooms: ___<br>
+            &nbsp;&nbsp;• Total Bathrooms: ___<br>
+            &nbsp;&nbsp;• Fixture Count Summary: see Fixture Schedule<br>
+            &nbsp;&nbsp;• Note: "Water demand to be verified by Maui County DWS"<br>
+            This demonstrates clarity and cooperation, reduces comments, and makes DWS's job straightforward. <em>You no longer calculate demand — but you control how demand is interpreted.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Special water-using features identified on plans: pools, spas, outdoor showers, irrigation systems, water features</div>
+          <div class="note">DWS may adjust demand upward for these. Omitting them can trigger comments even if not heavily scrutinized. Identify and note them proactively.</div>
+          <div class="pitfall-box">⚠ Pitfall (multi-structure projects): Ohana / ADU classification affects water allocation. Whether unit is attached vs. detached, has a full kitchen, and has a separate entrance all influence how DWS assigns demand. Confirm Ohana bedroom count is separated from main house in the Water Demand Summary.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Existing meter size and proposed water service shown on site plan (if upgrading service or if known)</div>
+          <div class="note">DWS determines final meter sizing, but showing existing meter size and proposed service connection location helps reviewers and avoids clarification requests.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Sewer connection or on-site wastewater system shown; Department of Health approval confirmed if septic</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Fire sprinkler plans (if required by building type or scope) — submitted separately to Fire Prevention Bureau for review; fee = 12.5% of building permit fee</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 8. CIVIL / GRADING                        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-civil">
+    <div class="section-header">
+      <div class="sec-icon">🌱</div>
+      <div class="sec-title">10 — Civil, Grading &amp; Drainage (if applicable)</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Separate Grading Permit application filed (G-permit) if earthwork / grading is involved</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Grading plan: limits of grading, existing and proposed contours (1-ft or 2-ft intervals), cut/fill volumes, haul routes</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><span class="tag xref">↔ SMA Phase 6</span>Best Management Practices (BMPs) for erosion and sedimentation control shown on grading plan (silt fence, rock check dams, construction entrance mat, etc.)</div>
+          <div class="note">↔ SMA Permit Checklist Phase 6 — transcription of SMA conditions onto construction drawings. SMA permits typically impose BMP and erosion-control conditions that must be reflected here.</div>
+          <div class="flag-note">⚠ Frequent flag: No erosion control BMPs shown on grading plan.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Retaining walls on grading plan: location, height, type, and drainage</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Drainage Report</strong> — 2 copies: required for projects under 1 acre</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Drainage and Soil Erosion Report</strong> — 2 copies: required for projects 1 acre or greater</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag cond">COND</span>Civil drawings for sewer, water service, roadway improvements — uploaded as a separate PDF file in MAPPS (label clearly, e.g., "CivilUtilityPlans.pdf")</div>
+          <div class="note">No separate paper sets required. Civil sheets max 24"×36"; same OCR PDF, B&amp;W, 150–300 dpi, bookmarked standards apply.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 9. AGENCY APPROVALS                       -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-agency">
+    <div class="section-header">
+      <div class="sec-icon">🏢</div>
+      <div class="sec-title">11 — Agency Approvals &amp; Concurrent Reviews</div>
+      <div class="sec-count">DSA routes applications concurrently</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Building Plan Review Section (DSA)</strong> — primary reviewer; compliance with 2018 IBC and 2018 IECC</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><span class="tag xref">↔ SMA Phase 1 · 5</span><strong>Planning Department</strong> — zoning compliance, use permit, SMA (if applicable), variance (if applicable)</div>
+          <div class="note">Verify Planning approval status in MAPPS before submittal. Planning "Approved" status must be current. ↔ SMA Permit Checklist Phase 1 (LUD form / zoning + community plan + state land use) and Phase 5 (SMA Minor or Major decision).</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span><strong>Department of Water Supply (DWS)</strong> — water availability and meter sizing; DWS now performs demand calculation internally based on bedroom count and fixture schedule on your plans — no applicant worksheet required</div>
+          <div class="note">Ensure bedroom count and complete fixture schedule are clearly shown on submitted plans. DWS uses these as inputs. Verify water availability / connection fee status for the specific TMK.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Fire Prevention Bureau</strong> — fire safety review; fee: 12.5% of building permit fee</div>
+          <div class="note">Fire sprinkler and alarm plans submitted directly to Fire; do not include in DSA set.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Department of Health</strong> — on-site wastewater treatment system (septic) approval, if applicable</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag shpd">SHPD</span><span class="tag xref">↔ SMA Phase 4</span><strong>State Historic Preservation Division (SHPD)</strong> — review and written approval if project may affect historic properties or is near an SIHP-listed site; Historic Resources Inventory form completed if required</div>
+          <div class="note">SHPD approval (or deemed approval under HRS §91-13.5(c)) must be secured. Verify SHPD "Approved" status in MAPPS. Check HiCRIS project record for current submission/response status. ↔ SMA Permit Checklist Phase 4 — AIS / SHPD consultation runs concurrently for SMA Major applications.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Department of ʻŌiwi Resources / County Archaeologist</strong> — coordination if site has cultural resource considerations</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag sma">SMA</span><span class="tag xref">↔ SMA Phase 5 · 6 · 7</span><strong>SMA Permit</strong> (Minor or Major) — must be issued by County Planning before building permit can be issued, if property is in the Special Management Area</div>
+          <div class="note">↔ SMA Permit Checklist Phases 5 (decision), 6 (transcription of conditions) and 7 (final QC). Attach stamped SMA approval letter; confirm all SMA conditions are annotated on plans before BPC submittal. See companion document: Oʻen Maui — Maui SMA Permit Checklist.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Design Review Committee (DRC)</strong> approval letter obtained and filed with Planning Department if project is within a DRC community or association requiring design review</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>All prior-cycle agency comments from MAPPS addressed in this resubmittal; response letter / comment matrix prepared</div>
+          <div class="note">For resubmittals: prepare a cloud/delta set highlighting all changes; include written response to each comment from each reviewing agency.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 10. FREQUENTLY FLAGGED                    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section s-flag">
+    <div class="section-header">
+      <div class="sec-icon">🚩</div>
+      <div class="sec-title">12 — Frequently Flagged: Final Pre-Submittal QC Pass</div>
+      <div class="sec-count">Based on Maui DSA Frequent Plan Review Corrections</div>
+    </div>
+    <div class="items">
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span><span class="tag xref">↔ SMA Phase 7</span>SMA Permit Checklist cross-checked — if project is in the SMA, confirm SMA Minor/Major permit is issued and all SMA conditions transcribed onto plans (coastal setback, BMPs, lighting, landscaping, hours of construction, etc.) before building permit submittal</div>
+          <div class="note">Use the companion Oʻen Maui — Maui SMA Permit Checklist (Phase 7 QC pass) to confirm all Phase 1–6 tasks are closed out. Do not submit the BPC if the SMA permit is still pending — DSA will reject under HRS § 205A.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Plan set is OCR PDF (searchable) — not a scanned image file</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>All pages oriented upright / landscape — no sideways or inverted sheets</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>File saved black and white; resolution 150–300 dpi; file size under 100 MB (split by discipline or volume if over)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Every sheet bookmarked with sheet number and title (e.g., "A2.1 Floor Plan Level 1")</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>File name uses letters and numbers only — no special characters, slashes, or symbols</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>County stamp area reserved (blank) on title sheet</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Resubmittal: transmittal/response letter included; revised sheets marked with revision clouds and delta numbers</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Same-lot multi-structure projects: legacy 10/15/20 ft rule NOT cited as controlling standard — current IBC § 705.3 imaginary line methodology used</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Imaginary line shown and labeled on site plan with FSD dimensions to each structure's exterior wall face</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Exterior wall fire-resistance ratings annotated on affected elevations / wall sections per amended Table 602 FSD bands</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Roof overhangs, eaves, balconies, and canopies near imaginary line checked — none extend within 40" of line (IBC § 705.2)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Opening area on affected walls confirmed compliant with IBC Table 705.8 at applicable FSD — annotated on elevations</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Energy Code Certification Block present on A, M, and E sheets — CONFIRMED</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>All setbacks correctly dimensioned on site plan for specific zoning district</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Impervious surface area ≤ 65% — calculated and confirmed on site plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Window SHGC ≤ 0.25 — confirmed in window schedule and on plan notes</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>≥ 90% of permanently installed lighting fixtures are high-efficacy — confirmed on lighting plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Smoke alarm and CO alarm locations shown on both floor plan and electrical/lighting plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Wet bar sink confirmed as small / bar-size — not full kitchen sink width</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Code references throughout plans updated to 2018 IBC / 2018 IECC</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Architect/engineer stamp: seal + signature + date + expiration date all present on every stamped sheet</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Occupancy Group and Type of Construction labeled on cover sheet or first architectural sheet</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Solar water heater requirement addressed (or exception documented with code basis)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>North arrow shown on site plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Scale bar shown on every sheet</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Existing structures on site labeled with prior permit numbers</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>All easements shown and labeled on site plan</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Insulation R-values labeled on all typical wall and roof sections</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Every bedroom labeled unambiguously on floor plans; no closeted / egress-windowed rooms left uncategorized (DWS counts these as bedrooms)</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Complete fixture schedule on plans — includes hose bibs, outdoor showers, bar sinks, laundry; nothing omitted</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag flag">FLAGGED</span>Water Demand Summary block on plans — total bedrooms, total bathrooms, fixture count reference, DWS note</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Multi-structure projects: Ohana / ADU bedroom count separated from main house in demand summary; classification (attached / detached, kitchen, separate entrance) clearly shown</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Owner authorization form current and matches property ownership record at DSA — especially if ownership has transferred since last permit</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 11. NOTES / OPEN ITEMS                    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section" style="border:1px solid var(--border);">
+    <div class="section-header" style="background:var(--light); color:var(--text);">
+      <div class="sec-icon">📝</div>
+      <div class="sec-title">13 — Notes &amp; Open Items</div>
+    </div>
+    <div style="padding:16px 20px; min-height:120px; color:var(--muted); font-size:11.5px;">
+      <div style="height:24px; border-bottom:1px solid var(--border); margin-bottom:10px;"></div>
+      <div style="height:24px; border-bottom:1px solid var(--border); margin-bottom:10px;"></div>
+      <div style="height:24px; border-bottom:1px solid var(--border); margin-bottom:10px;"></div>
+      <div style="height:24px; border-bottom:1px solid var(--border); margin-bottom:10px;"></div>
+      <div style="height:24px; border-bottom:1px solid var(--border); margin-bottom:10px;"></div>
+      <div style="height:24px; border-bottom:1px solid var(--border); margin-bottom:10px;"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>Sources &amp; References:</strong>
+  <div class="refs">
+    County of Maui DSA — Residential Checklist (7/21): mauicounty.gov/DocumentCenter/View/8635 &nbsp;·&nbsp;
+    County of Maui DSA — Commercial Checklist (7/21): mauicounty.gov/DocumentCenter/View/8649 &nbsp;·&nbsp;
+    Maui Frequent Plan Review Corrections: mapps.mauicounty.gov/DocumentCenter/View/320 &nbsp;·&nbsp;
+    Building Plans Review Section: mauicounty.gov/1308 &nbsp;·&nbsp;
+    2018 IECC Maui Residential Checklist (Apr 2024): energy.hawaii.gov &nbsp;·&nbsp;
+    Maui County Code Chapter 16.26B (Building Code) &nbsp;·&nbsp;
+    Maui County Code Chapter 16.16C (Energy Code) &nbsp;·&nbsp;
+    PS-Form B (Owner's Agent): mauicounty.gov/DocumentCenter/View/111638 &nbsp;·&nbsp;
+    PS-Form D (Contractor/Owner-Builder): mauicounty.gov/DocumentCenter/View/111643 &nbsp;·&nbsp;
+    Letter of Authorization: mauicounty.gov/DocumentView.asp?DID=8636 &nbsp;·&nbsp;
+    HRS §91-13.5(c) (deemed approval) &nbsp;·&nbsp;
+    HRS Chapter 464 (design professional licensing)
+  </div>
+  <div style="margin-top:10px; color:#aaa;">
+    Prepared by Oʻen Maui Architecture + Design · Erik Thorup, Architect · erik@oenmaui.com · 808.446.6999 · Rev. April 2026<br>
+    This checklist reflects publicly available DSA requirements and firm experience. Verify all requirements with DSA at time of submittal — codes and processes are subject to change.
+  </div>
+</footer>
+
+<script>
+  function clearAll() {
+    if (confirm('Clear all checkmarks?')) {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    }
+  }
+</script>
+
+</body>
+</html>
