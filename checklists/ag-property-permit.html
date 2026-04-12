@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oʻen Maui Architecture + Design — Agricultural Property Permit Checklist</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #f5f0e8;
+      --ocean:   #1a4a5c;
+      --teal:    #2a7a8c;
+      --coral:   #c85a3a;
+      --gold:    #c8973a;
+      --sage:    #5a7a5c;
+      --light:   #f9f7f4;
+      --border:  #ddd8ce;
+      --text:    #2a2420;
+      --muted:   #7a6e64;
+      --flag:    #fff3e0;
+      --flag-b:  #e65100;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ── INFO BOX ──────────────────────────────── */
+    .info-box {
+      background: #f0f9ff;
+      border-left: 3px solid #0ea5e9;
+      border-radius: 0 5px 5px 0;
+      padding: 9px 13px;
+      margin: 6px 0 4px 0;
+      font-size: 11px;
+      color: #0c4a6e;
+      line-height: 1.55;
+    }
+    .info-box strong { font-weight: 600; }
+
+    /* ── PITFALL BOX ───────────────────────────── */
+    .pitfall-box {
+      background: #fef2f2;
+      border-left: 3px solid #ef4444;
+      border-radius: 0 5px 5px 0;
+      padding: 8px 12px;
+      margin: 5px 0 3px 0;
+      font-size: 11px;
+      color: #7f1d1d;
+      line-height: 1.5;
+    }
+
+    /* ── PRINT ─────────────────────────────────── */
+    @media print {
+      body { background: white; font-size: 11px; }
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      .section { break-inside: avoid; }
+      header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    /* ── HEADER ────────────────────────────────── */
+    header {
+      background: var(--ocean);
+      color: white;
+      padding: 28px 40px 22px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    header .firm {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+    header .firm span {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 4px;
+    }
+    header .doc-meta {
+      text-align: right;
+      font-size: 11px;
+      opacity: 0.8;
+      line-height: 1.7;
+    }
+    header .doc-title {
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── INTRO ─────────────────────────────────── */
+    .intro {
+      background: var(--teal);
+      color: white;
+      padding: 12px 40px;
+      font-size: 11.5px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .intro strong { font-weight: 600; }
+
+    /* ── MAIN LAYOUT ───────────────────────────── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* ── PROJECT INFO BAR ──────────────────────── */
+    .project-bar {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px 24px;
+    }
+    .project-bar .field label {
+      display: block;
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+    .project-bar .field .val {
+      border-bottom: 1.5px solid var(--border);
+      min-height: 22px;
+      font-size: 12.5px;
+      padding-bottom: 2px;
+    }
+
+    /* ── SECTION ───────────────────────────────── */
+    .section {
+      margin-bottom: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .section-header {
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-header .sec-icon {
+      font-size: 16px;
+      width: 28px;
+      text-align: center;
+    }
+    .section-header .sec-title {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      flex: 1;
+    }
+    .section-header .sec-count {
+      font-size: 10.5px;
+      opacity: 0.7;
+    }
+
+    /* Section color themes */
+    .s-zoning  .section-header { background: #1a4a5c; color: white; }
+    .s-limits  .section-header { background: #2a5c3a; color: white; }
+    .s-farm    .section-header { background: #5c4a1a; color: white; }
+    .s-septic  .section-header { background: #3a5c7a; color: white; }
+    .s-exempt  .section-header { background: #5c3a2a; color: white; }
+    .s-dwell   .section-header { background: #5c2a5c; color: white; }
+    .s-constr  .section-header { background: #2a5c5c; color: white; }
+    .s-occupy  .section-header { background: #7a5c1a; color: white; }
+    .s-ongoing .section-header { background: #5a7a5c; color: white; }
+    .s-pitfall .section-header { background: #c85a3a; color: white; }
+
+    /* ── CHECKLIST ITEM ────────────────────────── */
+    .items { padding: 4px 0; }
+    .item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      align-items: start;
+      border-top: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .item:hover { background: var(--light); }
+    .item:first-child { border-top: none; }
+
+    .item .cb {
+      padding: 9px 0 9px 14px;
+      display: flex;
+      align-items: flex-start;
+      padding-top: 11px;
+    }
+    .item input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      border: 2px solid #aaa;
+      border-radius: 3px;
+      cursor: pointer;
+      accent-color: var(--ocean);
+      flex-shrink: 0;
+    }
+
+    .item .body {
+      padding: 9px 16px 9px 2px;
+    }
+    .item .body .main-text {
+      font-size: 12.5px;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .item .body .note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .item .body .flag-note {
+      font-size: 11px;
+      color: var(--flag-b);
+      margin-top: 2px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+    .tag.req  { background: #dbeafe; color: #1d4ed8; }
+    .tag.flag { background: #fee2e2; color: #b91c1c; }
+    .tag.cond { background: #fef3c7; color: #92400e; }
+    .tag.xref { background: #ecfdf5; color: #065f46; border: 1px dashed #10b981; }
+
+    /* Sub-header within section */
+    .sub-head {
+      padding: 7px 16px 4px 52px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      background: var(--light);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── PHASE DIVIDER ─────────────────────────── */
+    .phase-divider {
+      background: var(--ocean);
+      color: white;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin: 32px 0 20px;
+      border-radius: 8px;
+    }
+    .phase-divider:first-of-type { margin-top: 0; }
+    .phase-divider .phase-sub {
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.8;
+      margin-top: 4px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── TABLE ──────────────────────────────────── */
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px;
+      font-size: 12px;
+    }
+    .ref-table th {
+      background: var(--ocean);
+      color: white;
+      text-align: left;
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+    .ref-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ref-table tr:nth-child(even) td { background: #f2f7f8; }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 24px 40px;
+      color: var(--muted);
+      font-size: 10.5px;
+      border-top: 1px solid var(--border);
+    }
+    footer .refs {
+      margin-top: 8px;
+      line-height: 1.8;
+    }
+
+    /* ── PRINT BUTTON ──────────────────────────── */
+    .print-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .print-bar .instructions {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .btn {
+      background: var(--ocean);
+      color: white;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn:hover { background: var(--teal); }
+    .btn-clear {
+      background: white;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-clear:hover { background: var(--light); }
+  </style>
+</head>
+<body>
+
+<!-- ════════ SITE CHROME (community checklists wrapper) ════════ -->
+<style>
+  .ckx-bar {
+    max-width: 900px;
+    margin: 0 auto 16px;
+    padding: 18px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+  }
+  .ckx-back { color: #1a4a5c; text-decoration: none; font-weight: 600; }
+  .ckx-back:hover { color: #2a7a8c; text-decoration: underline; }
+  .ckx-back::before { content: "← "; color: #2a7a8c; }
+  .ckx-home { color: #7a6e64; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+  .ckx-home:hover { color: #2a7a8c; }
+  .ckx-disclaimer {
+    max-width: 900px;
+    margin: 0 auto 22px;
+    padding: 18px 22px;
+    background: #fdf6e3;
+    border-left: 6px solid #c08a3e;
+    border-top: 1px solid #e6d8a8;
+    border-right: 1px solid #e6d8a8;
+    border-bottom: 1px solid #e6d8a8;
+    border-radius: 6px;
+    color: #7a5220;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .ckx-disclaimer .ckx-dh {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .ckx-disclaimer p { margin: 0 0 6px; }
+  .ckx-disclaimer p:last-child { margin-bottom: 0; }
+  .ckx-disclaimer a { color: #7a5220; text-decoration: underline; }
+  .ckx-headsup {
+    max-width: 900px;
+    margin: 0 auto 22px;
+    padding: 16px 22px;
+    background: #f2f7f8;
+    border-left: 6px solid #2a7a8c;
+    border-top: 1px solid #d0dde1;
+    border-right: 1px solid #d0dde1;
+    border-bottom: 1px solid #d0dde1;
+    border-radius: 6px;
+    color: #1a4a5c;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+    line-height: 1.58;
+  }
+  .ckx-headsup .ckx-hh {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #1e5d6b;
+    margin-bottom: 6px;
+  }
+  .ckx-headsup p { margin: 0 0 6px; }
+  .ckx-headsup p:last-child { margin-bottom: 0; }
+  .ckx-headsup a { color: #1e5d6b; font-weight: 700; text-decoration: underline; }
+  @media print {
+    .ckx-bar, .ckx-disclaimer, .ckx-headsup { display: none !important; }
+  }
+</style>
+<nav class="ckx-bar">
+  <a class="ckx-back" href="../index.html">Maui Permit Checklists</a>
+  <a class="ckx-home" href="https://oenmaui.com">oenmaui.com ↗</a>
+</nav>
+<aside class="ckx-disclaimer" aria-label="Please read before using this checklist">
+  <div class="ckx-dh">Please read before using this checklist</div>
+  <p>This checklist reflects Maui County and State of Hawaiʻi rules as we understand them in April 2026. Codes change, interpretations shift, and every parcel is different. Use this as a starting framework — not a substitute for professional advice. Confirm current requirements with the Maui County Planning Department and Department of Public Works before filing.</p>
+  <p>Found an error? <a href="https://github.com/oen-maui/maui-permit-checklists/discussions">Let us know on GitHub</a> or email <a href="mailto:studio@oenmaui.com?subject=Ag%20Property%20Checklist%20%E2%80%94%20feedback">studio@oenmaui.com</a>.</p>
+</aside>
+<aside class="ckx-headsup" aria-label="This checklist is in addition to the standard building permit process">
+  <div class="ckx-hh">This checklist is in addition to the standard building permit</div>
+  <p>Agricultural-zoned land has an additional layer of requirements that don't apply to urban or rural parcels. Once you've addressed the ag-specific items below, the <a href="building-permit.html">Building Permit Checklist</a> still applies for the building permit itself.</p>
+</aside>
+<!-- ════════ END SITE CHROME ════════ -->
+
+<!-- HEADER -->
+<header>
+  <div class="firm">
+    <span>Architecture + Design</span>
+    Oʻen Maui
+  </div>
+  <div class="doc-meta">
+    <div class="doc-title">Agricultural Property Permit Checklist</div>
+    Maui County — What to know before you build on ag-zoned land<br>
+    HRS Chapter 205 · MCC 19.30A · HAR 11-62<br>
+    Rev. April 2026 — v1.0
+  </div>
+</header>
+
+<!-- INTRO BAND -->
+<div class="intro">
+  <strong>Purpose:</strong> Walk through ag-specific requirements in order — from zoning verification through final sign-off — before filing your building permit.
+</div>
+
+<!-- PRINT BAR -->
+<div class="print-bar no-print">
+  <span class="instructions">Check off items as you confirm them. Print or export to PDF via File → Print.</span>
+  <div style="display:flex;gap:8px;">
+    <button class="btn btn-clear" onclick="clearAll()">Clear All</button>
+    <button class="btn" onclick="window.print()">Print / Save PDF</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- PROJECT INFO -->
+  <div class="project-bar">
+    <div class="field"><label>Project Name</label><div class="val"></div></div>
+    <div class="field"><label>Address</label><div class="val"></div></div>
+    <div class="field"><label>TMK</label><div class="val"></div></div>
+    <div class="field"><label>Parcel Size (acres)</label><div class="val"></div></div>
+    <div class="field"><label>Architect / Designer</label><div class="val"></div></div>
+    <div class="field"><label>Date</label><div class="val"></div></div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PHASE 1: BEFORE YOU DESIGN                -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-divider">
+    Phase 1 — Before You Design
+    <div class="phase-sub">Threshold questions. If you don't have clear answers to all of them, the rest of the checklist won't matter.</div>
+  </div>
+
+  <!-- 1. Zoning & Land Use -->
+  <div class="section s-zoning">
+    <div class="section-header">
+      <div class="sec-icon">📍</div>
+      <div class="sec-title">1 — Verify Zoning &amp; Land Use Classification</div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Confirm the parcel is classified <strong>Agricultural</strong> by both the State Land Use Commission (HRS Chapter 205) and Maui County zoning (MCC 19.30A)</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Pull your Tax Map Key (TMK) number — you'll need it for every filing</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Check whether the parcel is in a <strong>Special Management Area (SMA)</strong> — if so, the SMA permit process also applies</div>
+          <div class="note">See the <a href="sma-permit.html" style="color:inherit;">SMA Permit Checklist</a> for the full SMA process.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Check whether the parcel is in a <strong>flood zone</strong> — floodplain standards apply regardless of any ag exemptions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. What's Allowed -->
+  <div class="section s-limits">
+    <div class="section-header">
+      <div class="sec-icon">📐</div>
+      <div class="sec-title">2 — Understand What's Allowed on Your Parcel</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">Two-Layer Framework</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Confirm proposed use is permitted under <strong>State law (HRS §205-4.5)</strong> — defines permissible uses statewide; if a use isn't listed here, it's prohibited regardless of county code</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Confirm proposed use complies with <strong>County code (MCC 19.30A)</strong> — adds Maui-specific dimensional standards, dwelling limits, and permit procedures on top of state rules</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Key Dimensional Limits (MCC 19.30A)</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text">Review key limits for your parcel:</div>
+          <table class="ref-table">
+            <tr><th>Standard</th><th>Requirement</th></tr>
+            <tr><td>Minimum lot size</td><td>2 acres</td></tr>
+            <tr><td>Minimum lot width</td><td>200 feet</td></tr>
+            <tr><td>Front setback</td><td>25 feet</td></tr>
+            <tr><td>Side / rear setback</td><td>15 feet</td></tr>
+            <tr><td>Max farm dwellings per lot</td><td>2 (one limited to 1,500 sq ft developable area)</td></tr>
+            <tr><td>Max developable area (dwellings)</td><td>10% of lot</td></tr>
+            <tr><td>Max dwelling height</td><td>30 feet (40 ft for roof vents / solar)</td></tr>
+            <tr><td>Non-residential ag structures</td><td>No absolute cap; +1 ft setback per ft above 35 ft</td></tr>
+            <tr><td>Walls within yard setback</td><td>4 feet maximum</td></tr>
+            <tr><td>General fences</td><td>7 feet (no permit required)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>Structure naming / justification planned — how you label a structure determines whether it passes review</div>
+          <div class="info-box"><strong>A note on naming:</strong> A "gazebo" or "pavilion" is recreational and will be denied. The same physical structure labeled "ag equipment storage" or "produce preparation building" is agricultural and can be approved. Plan the justification narrative before you design the building.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PHASE 2: BEFORE YOU FILE                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-divider">
+    Phase 2 — Before You File
+    <div class="phase-sub">These items need to be in place or underway before your permit application goes in.</div>
+  </div>
+
+  <!-- 3. Two-of-Three Test -->
+  <div class="section s-farm">
+    <div class="section-header">
+      <div class="sec-icon">🌾</div>
+      <div class="sec-title">3 — Farm Labor Dwelling: The Two-of-Three Test</div>
+      <div class="sec-count">If building a farm dwelling</div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text">Farm labor dwellings (one per 5 acres) require the owner to meet <strong>at least two of three</strong> criteria:</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Ag income:</strong> $35,000+ gross agricultural sales per year for two consecutive years, documented via State general excise tax forms and federal Form 1040 Schedule F</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Ag water rates:</strong> Certification from the Department of Water Supply that agricultural water rates are being paid</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span><strong>Farm plan:</strong> An approved farm plan demonstrating the feasibility of commercial agricultural production (see Section 4 below)</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text">Determined which two criteria apply to this project</div>
+          <div class="info-box"><strong>The farm plan is just one path.</strong> You need two of the three criteria — not all three. If you already have documented ag income and are paying ag water rates, you may not need a farm plan at all. Conversely, a farm plan alone is not enough — you'll still need one of the other two.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Farm Plan -->
+  <div class="section s-farm">
+    <div class="section-header">
+      <div class="sec-icon">📋</div>
+      <div class="sec-title">4 — Complete Farm Plan Guide</div>
+      <div class="sec-count">If farm plan is one of your two criteria</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">What to Include</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Property map showing areas designated for agricultural use (does not need to be to scale)</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Written description of crops, plants, and/or animals to be cultivated — covering at least <strong>51% of the parcel</strong> for agriculture or agricultural land conservation</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Labeled photographs of the property illustrating current agricultural uses, combined into a single PDF</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Realistic economic feasibility assessment appropriate for the parcel size</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Description of specific agricultural activities (e.g., fruit orchards, vegetable farming, animal husbandry, nursery operations, aquaculture)</div>
+        </div>
+      </div>
+
+      <div class="sub-head">How to Submit</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Email the farm plan in PDF format to <strong>currentdivision@mauicounty.gov</strong></div>
+          <div class="note">No paper applications accepted since March 2022. All supporting documents should be attached to a single email. A MAPPS portal account is required for fee payments.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text">Farm plan reviewed and approved by the Planning Director</div>
+          <div class="note">Expect 30 to 90+ days for review and approval. Incomplete applications may be returned. Contact: Maui County Planning Department, (808) 270-7735. The official form is titled "Farm Plan Review" on the Planning Department website.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Septic / IWS -->
+  <div class="section s-septic">
+    <div class="section-header">
+      <div class="sec-icon">🔧</div>
+      <div class="sec-title">5 — Septic / Individual Wastewater System (IWS)</div>
+      <div class="sec-count">Required for virtually all ag-land projects</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">Sizing</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Determine IWS tank capacity based on bedroom count:</div>
+          <table class="ref-table">
+            <tr><th>Bedrooms</th><th>Minimum tank capacity</th></tr>
+            <tr><td>1–4 bedrooms</td><td>1,000 gallons</td></tr>
+            <tr><td>5 bedrooms</td><td>1,500 gallons</td></tr>
+            <tr><td>6+ bedrooms</td><td>Requires wastewater treatment plant</td></tr>
+          </table>
+          <div class="pitfall-box"><strong>The 5-bedroom cliff:</strong> At 6+ bedrooms, you jump from a septic tank to a full wastewater treatment plant — $50,000–$100,000 and a fundamentally different permitting process. If the property is large enough, an alternative is to install two separate IWS systems: one for the dwelling (sized to 5 bedrooms or fewer) and a second for ag buildings with water needs. This keeps each system under the threshold and avoids triggering the treatment-plant requirement. It requires two DOH approvals, but is often simpler and less expensive than a single treatment plant.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">DOH Approval Process</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Hire a licensed Hawaiʻi civil engineer to design the system</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Engineer performs percolation test and designs per HAR Chapter 11-62</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Engineer submits plans to DOH Wastewater Branch for review (~10 days)</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>DOH approval received — attach IWS plans to each set of permit construction plans</div>
+          <div class="info-box"><strong>Timing matters:</strong> DOH approval expires in one year without a concurrent active building permit. Time the septic design to align with your permit application — don't submit too early.</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Setback Requirements</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text">IWS setbacks verified on site plan:</div>
+          <div class="note">Treatment units: 25 ft from property lines, 10 ft from buildings · Disposal field: 5 ft from property lines, 5 ft from buildings · 100 ft from streams, wetlands, or ocean · 1,000 ft from drinking water wells</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Ag Buildings with Plumbing</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span>If your ag building includes plumbing (worker bathrooms, produce wash sinks, hose bibs): <strong>ZAED justification letter</strong> prepared explaining how each fixture relates to the agricultural operation</div>
+          <div class="note">Wastewater from those fixtures counts toward your IWS design flow, which affects septic system sizing and may affect your dual-system strategy.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PHASE 3: WHAT TO FILE                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-divider">
+    Phase 3 — What to File
+    <div class="phase-sub">The path depends on what you're building.</div>
+  </div>
+
+  <!-- 6. HRS 46-88 Exemption -->
+  <div class="section s-exempt">
+    <div class="section-header">
+      <div class="sec-icon">🏗️</div>
+      <div class="sec-title">6 — Ag Buildings (Non-Dwelling): HRS 46-88 Exemption</div>
+    </div>
+    <div class="items">
+
+      <div class="sub-head">Qualifying Criteria</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Building is <strong>not</strong> used as a dwelling or lodging</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Maximum <strong>1,000 sq ft</strong> per individual structure</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Maximum <strong>5,000 sq ft aggregate</strong> on lots of 2 acres or less (8,000 sq ft for lots 2–5 acres)</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Minimum <strong>15 ft horizontal separation</strong> between exempt buildings</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Property is <strong>2+ contiguous acres</strong> used primarily for agriculture</div>
+        </div>
+      </div>
+
+      <div class="sub-head">Filing</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Declaration of Compliance</strong> filed — specifying size, type, and location of the proposed structure</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>County verifies floodplain and SMA compliance before work can begin</div>
+        </div>
+      </div>
+
+      <div class="sub-head">After Construction</div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>As-built notification submitted to fire department and building department within <strong>30 days</strong> of completion</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>Hold Harmless Agreement and Certificate of Exemption filed (per MCC 16.26B.108.4)</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text">Understand what the exemption does <strong>not</strong> cover:</div>
+          <div class="pitfall-box"><strong>Electrical and plumbing</strong> still require separate county permits, even for exempt structures. The HRS 46-88 exemption covers the building shell only. Gazebos, recreational structures, and covered patios do not qualify.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Farm Dwellings: Standard BPC -->
+  <div class="section s-dwell">
+    <div class="section-header">
+      <div class="sec-icon">🏡</div>
+      <div class="sec-title">7 — Farm Dwellings: Standard Building Permit</div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span><strong>Farm Dwelling and Agricultural Structures Declaration</strong> form filed with the permit application</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>IWS plans attached to each set of construction plans</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Standard building permit application submitted via <strong>MAPPS portal</strong></div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag xref">XREF</span>For the full building permit process, see the <a href="building-permit.html" style="color:#065f46; font-weight:700;">Building Permit Checklist</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PHASE 4: AFTER THE PERMIT                 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-divider">
+    Phase 4 — After the Permit
+    <div class="phase-sub">Construction, occupancy, and ongoing requirements.</div>
+  </div>
+
+  <!-- 8. During Construction -->
+  <div class="section s-constr">
+    <div class="section-header">
+      <div class="sec-icon">🔨</div>
+      <div class="sec-title">8 — During Construction</div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>IWS installed by a contractor with A, C-9, C-37, C-37a, or C-43 license</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Designing engineer inspects and certifies the IWS installation</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>All electrical and plumbing work permitted and inspected separately</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag xref">XREF</span>Standard building inspections per the <a href="building-permit.html" style="color:#065f46; font-weight:700;">Building Permit Checklist</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Before Occupancy -->
+  <div class="section s-occupy">
+    <div class="section-header">
+      <div class="sec-icon">🔑</div>
+      <div class="sec-title">9 — Before Occupancy</div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>DOH issues written <strong>"Approval to Use"</strong> for the IWS — the system cannot be used until this letter is received</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Certificate of Occupancy or final inspection sign-off from the county</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>If applicable: Hold Harmless Agreement recorded with the Bureau of Conveyances</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Ongoing -->
+  <div class="section s-ongoing">
+    <div class="section-header">
+      <div class="sec-icon">🔄</div>
+      <div class="sec-title">10 — Ongoing Requirements</div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>IWS inspection every <strong>3 years</strong></div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag req">REQ</span>Septic tank pumping every <strong>5–7 years</strong> (or as needed)</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag cond">COND</span>If agricultural use changes, notify the Planning Department within <strong>30 days</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- COMMON PITFALLS                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-divider" style="background: var(--coral);">
+    Common Pitfalls
+    <div class="phase-sub">Issues that trip people up — read before you start.</div>
+  </div>
+
+  <div class="section s-pitfall">
+    <div class="section-header">
+      <div class="sec-icon">⚠️</div>
+      <div class="sec-title">11 — Things That Catch People Off Guard</div>
+    </div>
+    <div class="items">
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span><strong>No farming = no dwelling.</strong> Owning ag-zoned land does not automatically entitle you to build a farm dwelling. The dwelling must be occupied by someone actively farming the property. The county requires proof of agricultural activity.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><strong>The 10% cap applies only to dwellings.</strong> The 10% developable-area limit under MCC 19.30A covers farm dwellings only. Agricultural support structures (barns, storage, greenhouses, stables) are exempt from this cap.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><strong>Private deed restrictions may not apply.</strong> HRS §205-4.6 voids private deed restrictions recorded after 2003 that attempt to prohibit permitted agricultural uses. If an HOA or CC&amp;R tries to block a legitimate ag use, state law overrides it.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span><strong>Cesspools are prohibited statewide.</strong> Hawaiʻi Act 125 (2017) bans new cesspools and requires existing ones to be converted by 2050. Any renovation touching the wastewater system must upgrade to a septic tank or aerobic treatment unit.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><span class="tag flag">FLAGGED</span><strong>Percolation testing affects site layout.</strong> The septic absorption field size depends on soil drainage, typically 75–100 sq ft per bedroom. Poor-draining soils (common in some Maui upcountry areas) can significantly increase the required field, which constrains where you can build. Test early.</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="cb"><input type="checkbox"></div>
+        <div class="body">
+          <div class="main-text"><strong>The farm plan is for building permits only.</strong> An approved farm plan does not automatically establish agricultural-use status for property tax purposes. That requires a separate notification to the Real Property Tax Division, with its own site inspection.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>Sources &amp; References:</strong>
+  <div class="refs">
+    HRS Chapter 205 (§205-2, §205-4.5, §205-4.6, §205-5, §205-6) &nbsp;·&nbsp;
+    HRS §46-88 &nbsp;·&nbsp;
+    MCC §19.30A &nbsp;·&nbsp;
+    MCC 16.25 &nbsp;·&nbsp;
+    MCC §16.26B.108.4 &nbsp;·&nbsp;
+    HAR Title 11, Chapter 62 &nbsp;·&nbsp;
+    Hawaiʻi DOH Wastewater Branch &nbsp;·&nbsp;
+    Hawaiʻi Act 125 (2017) &nbsp;·&nbsp;
+    Farm Plan Review form (Maui County Planning) &nbsp;·&nbsp;
+    Farm Dwelling and Agricultural Structures Declaration form
+  </div>
+  <div style="margin-top:10px; color:#aaa;">
+    Prepared by Oʻen Maui Architecture + Design · studio@oenmaui.com · Rev. April 2026 — v1.0<br>
+    This checklist reflects publicly available permitting requirements and firm experience. Verify all requirements with the relevant agency at time of submittal — codes and processes are subject to change.
+  </div>
+</footer>
+
+<script>
+  function clearAll() {
+    if (confirm('Clear all checkmarks?')) {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    }
+  }
+</script>
+
+</body>
+</html>
