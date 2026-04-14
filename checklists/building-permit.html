@@ -380,6 +380,29 @@
       font-family: inherit;
     }
     .btn:hover { background: var(--teal); }
+    /* ── FORM & SOURCE LINKS ──────────────────── */
+    a.form-link {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      border: 1px solid var(--teal);
+      border-radius: 3px;
+      padding: 1px 7px;
+      margin-left: 6px;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+      transition: background 0.12s, color 0.12s;
+    }
+    a.form-link:hover { background: var(--teal); color: white; text-decoration: none; }
+    a.src-link {
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--teal);
+    }
+    a.src-link:hover { color: var(--ocean); border-bottom-color: var(--ocean); }
     .btn-clear {
       background: white;
       color: var(--muted);
@@ -566,7 +589,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form A</strong> — Application for Building Permit: fully completed, signed, dated</div>
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form A</strong> — Application for Building Permit: fully completed, signed, dated <a class="form-link" href="https://www.mauicounty.gov/DocumentCenter/View/111640" target="_blank">↓ Form</a></div>
           <div class="note">Include project name, address, TMK, scope of work, construction value, and contact information for owner, contractor, and design professional.</div>
         </div>
       </div>
@@ -574,8 +597,8 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form B</strong> — Owner's Agent Authorization: design professional / architect authorized to submit on owner's behalf</div>
-          <div class="note">Required when the architect/design firm is submitting on behalf of the owner. Use the "Letter of Authorization to Obtain a Building Permit" (mauicounty.gov DID=8636) if PS-Form B is not used. Confirm which form DSA currently accepts for design professional authorization.</div>
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form B</strong> — Owner's Agent Authorization: design professional / architect authorized to submit on owner's behalf <a class="form-link" href="https://www.mauicounty.gov/DocumentCenter/View/111638" target="_blank">↓ Form</a></div>
+          <div class="note">Required when the architect/design firm is submitting on behalf of the owner. Use the <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/8636" target="_blank">Letter of Authorization to Obtain a Building Permit</a> if PS-Form B is not used. Confirm which form DSA currently accepts for design professional authorization.</div>
         </div>
       </div>
 
@@ -589,7 +612,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form D</strong> — Contractor / Owner-Builder Declaration: confirm which section applies</div>
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form D</strong> — Contractor / Owner-Builder Declaration: confirm which section applies <a class="form-link" href="https://www.mauicounty.gov/DocumentCenter/View/111643" target="_blank">↓ Form</a></div>
           <div class="note">Section A: licensed contractor performing work. Section B: Owner-Builder Disclosure (owner acts as own GC — verify eligibility, must personally supervise, licensed subs required).</div>
         </div>
       </div>
@@ -597,7 +620,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form E</strong> — Special Inspections Form: completed (required for each building permit)</div>
+          <div class="main-text"><span class="tag req">REQ</span><strong>PS-Form E</strong> — Special Inspections Form: completed (required for each building permit) <a class="form-link" href="https://www.mauicounty.gov/DocumentCenter/View/79042" target="_blank">↓ Form</a></div>
           <div class="note">Based on 2018 IBC / 2012 IBC Section 1705. Identify which special inspections are required and name the special inspector / inspection agency.</div>
         </div>
       </div>
@@ -632,7 +655,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span>General Contractor license number verified as active with Hawaii DCCA (dcca.hawaii.gov/pvl)</div>
+          <div class="main-text"><span class="tag req">REQ</span>General Contractor license number verified as active with <a class="src-link" href="https://cca.hawaii.gov/pvl/" target="_blank">Hawaii DCCA</a></div>
         </div>
       </div>
 
@@ -655,7 +678,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span>All plans and documents submitted electronically via <strong>MAPPS Customer Self-Service (CSS)</strong> portal — mapps.mauicounty.gov</div>
+          <div class="main-text"><span class="tag updated">UPDATED</span><span class="tag req">REQ</span>All plans and documents submitted electronically via <strong><a class="src-link" href="https://mapps.mauicounty.gov/" target="_blank" style="color:var(--text);">MAPPS Customer Self-Service (CSS)</a></strong> portal</div>
           <div class="info-box"><strong>No paper plan sets required.</strong> The County of Maui eliminated paper submissions when MAPPS launched on April 18, 2022. All new permit and plan review applications — including all supporting documents — must be submitted online through MAPPS CSS. See Section 2 below for complete digital file standards.</div>
         </div>
       </div>
@@ -801,7 +824,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span>Resubmittals: include a <strong>Building Permit Transmittal Form</strong> (or written response letter) detailing every change made in the revised plan set</div>
+          <div class="main-text"><span class="tag req">REQ</span>Resubmittals: include a <strong>Building Permit Transmittal Form</strong> (or written response letter) detailing every change made in the revised plan set <a class="form-link" href="https://mapps.mauicounty.gov/DocumentCenter/View/137" target="_blank">↓ Form</a></div>
           <div class="note">List each reviewer comment, the sheet number(s) where the correction was made, and a brief description of the change. Cloud / delta markers on revised sheets are strongly recommended.</div>
         </div>
       </div>
@@ -1788,7 +1811,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag shpd">SHPD</span><span class="tag xref">↔ SMA Phase 4</span><strong>State Historic Preservation Division (SHPD)</strong> — review and written approval if project may affect historic properties or is near an SIHP-listed site; Historic Resources Inventory form completed if required</div>
+          <div class="main-text"><span class="tag shpd">SHPD</span><span class="tag xref">↔ SMA Phase 4</span><strong><a class="src-link" href="https://dlnr.hawaii.gov/shpd/forms/" target="_blank" style="color:inherit;">State Historic Preservation Division (SHPD)</a></strong> — review and written approval if project may affect historic properties or is near an SIHP-listed site; Historic Resources Inventory form completed if required</div>
           <div class="note">SHPD approval (or deemed approval under HRS §91-13.5(c)) must be secured. Verify SHPD "Approved" status in MAPPS. Check HiCRIS project record for current submission/response status. ↔ SMA Permit Checklist Phase 4 — AIS / SHPD consultation runs concurrently for SMA Major applications.</div>
         </div>
       </div>
@@ -2104,18 +2127,18 @@
 <footer>
   <strong>Sources &amp; References:</strong>
   <div class="refs">
-    County of Maui DSA — Residential Checklist (7/21): mauicounty.gov/DocumentCenter/View/8635 &nbsp;·&nbsp;
-    County of Maui DSA — Commercial Checklist (7/21): mauicounty.gov/DocumentCenter/View/8649 &nbsp;·&nbsp;
-    Maui Frequent Plan Review Corrections: mapps.mauicounty.gov/DocumentCenter/View/320 &nbsp;·&nbsp;
-    Building Plans Review Section: mauicounty.gov/1308 &nbsp;·&nbsp;
+    County of Maui DSA — <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/8635" target="_blank">Residential Checklist (7/21)</a> &nbsp;·&nbsp;
+    County of Maui DSA — <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/8649" target="_blank">Commercial Checklist (7/21)</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://mapps.mauicounty.gov/DocumentCenter/View/320" target="_blank">Maui Frequent Plan Review Corrections</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.mauicounty.gov/1308" target="_blank">Building Plans Review Section</a> &nbsp;·&nbsp;
     2018 IECC Maui Residential Checklist (Apr 2024): energy.hawaii.gov &nbsp;·&nbsp;
-    Maui County Code Chapter 16.26B (Building Code) &nbsp;·&nbsp;
+    <a class="src-link" href="https://library.municode.com/hi/county_of_maui/codes/code_of_ordinances?nodeId=TIT16BUCO_CH16.26BBUCO" target="_blank">Maui County Code Chapter 16.26B</a> (Building Code) &nbsp;·&nbsp;
     Maui County Code Chapter 16.16C (Energy Code) &nbsp;·&nbsp;
-    PS-Form B (Owner's Agent): mauicounty.gov/DocumentCenter/View/111638 &nbsp;·&nbsp;
-    PS-Form D (Contractor/Owner-Builder): mauicounty.gov/DocumentCenter/View/111643 &nbsp;·&nbsp;
-    Letter of Authorization: mauicounty.gov/DocumentView.asp?DID=8636 &nbsp;·&nbsp;
-    HRS §91-13.5(c) (deemed approval) &nbsp;·&nbsp;
-    HRS Chapter 464 (design professional licensing)
+    <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/111638" target="_blank">PS-Form B</a> (Owner's Agent) &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/111643" target="_blank">PS-Form D</a> (Contractor/Owner-Builder) &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/8636" target="_blank">Letter of Authorization</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/Vol02_Ch0046-0115/HRS0091/HRS_0091-0013_0005.htm" target="_blank">HRS §91-13.5(c)</a> (deemed approval) &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/Vol10_Ch0436-0474/HRS0464/HRS_0464-.htm" target="_blank">HRS Chapter 464</a> (design professional licensing)
   </div>
   <div style="margin-top:10px; color:#aaa;">
     Prepared by Oʻen Maui Architecture + Design · studio@oenmaui.com · Rev. April 2026<br>
