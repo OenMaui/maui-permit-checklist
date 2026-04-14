@@ -362,6 +362,29 @@
       font-family: inherit;
     }
     .btn:hover { background: var(--teal); }
+    /* ── FORM & SOURCE LINKS ──────────────────── */
+    a.form-link {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      border: 1px solid var(--teal);
+      border-radius: 3px;
+      padding: 1px 7px;
+      margin-left: 6px;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+      transition: background 0.12s, color 0.12s;
+    }
+    a.form-link:hover { background: var(--teal); color: white; text-decoration: none; }
+    a.src-link {
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--teal);
+    }
+    a.src-link:hover { color: var(--ocean); border-bottom-color: var(--ocean); }
     .btn-clear {
       background: white;
       color: var(--muted);
@@ -520,7 +543,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span>Confirm the parcel is classified <strong>Agricultural</strong> by both the State Land Use Commission (HRS Chapter 205) and Maui County zoning (MCC 19.30A)</div>
+          <div class="main-text"><span class="tag req">REQ</span>Confirm the parcel is classified <strong>Agricultural</strong> by both the State Land Use Commission (<a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/vol04_ch0201-0257/hrs0205/hrs_0205-.htm" target="_blank">HRS Chapter 205</a>) and Maui County zoning (<a class="src-link" href="https://library.municode.com/hi/county_of_maui/codes/code_of_ordinances?nodeId=TIT19ZO_ARTIICOZOPR_CH19.30AAGDI" target="_blank">MCC 19.30A</a>)</div>
         </div>
       </div>
       <div class="item">
@@ -557,13 +580,13 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span>Confirm proposed use is permitted under <strong>State law (HRS §205-4.5)</strong> — defines permissible uses statewide; if a use isn't listed here, it's prohibited regardless of county code</div>
+          <div class="main-text"><span class="tag req">REQ</span>Confirm proposed use is permitted under <strong>State law (<a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/vol04_ch0201-0257/hrs0205/HRS_0205-0004_0005.htm" target="_blank" style="color:inherit;">HRS §205-4.5</a>)</strong> — defines permissible uses statewide; if a use isn't listed here, it's prohibited regardless of county code</div>
         </div>
       </div>
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span>Confirm proposed use complies with <strong>County code (MCC 19.30A)</strong> — adds Maui-specific dimensional standards, dwelling limits, and permit procedures on top of state rules</div>
+          <div class="main-text"><span class="tag req">REQ</span>Confirm proposed use complies with <strong>County code (<a class="src-link" href="https://library.municode.com/hi/county_of_maui/codes/code_of_ordinances?nodeId=TIT19ZO_ARTIICOZOPR_CH19.30AAGDI" target="_blank" style="color:inherit;">MCC 19.30A</a>)</strong> — adds Maui-specific dimensional standards, dwelling limits, and permit procedures on top of state rules</div>
         </div>
       </div>
 
@@ -702,7 +725,7 @@
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
           <div class="main-text">Farm plan reviewed and approved by the Planning Director</div>
-          <div class="note">Expect 30 to 90+ days for review and approval. Incomplete applications may be returned. Contact: Maui County Planning Department, (808) 270-7735. The official form is titled "Farm Plan Review" on the Planning Department website.</div>
+          <div class="note">Expect 30 to 90+ days for review and approval. Incomplete applications may be returned. Contact: Maui County Planning Department, (808) 270-7735. The official form is titled <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/118412" target="_blank">"Farm Plan Review"</a> on the Planning Department website.</div>
         </div>
       </div>
     </div>
@@ -742,7 +765,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span>Engineer performs percolation test and designs per HAR Chapter 11-62</div>
+          <div class="main-text"><span class="tag req">REQ</span>Engineer performs percolation test and designs per <a class="src-link" href="https://www.law.cornell.edu/regulations/hawaii/title-11/subtitle-1/chapter-62" target="_blank">HAR Chapter 11-62</a></div>
         </div>
       </div>
       <div class="item">
@@ -792,7 +815,7 @@
   <div class="section s-exempt">
     <div class="section-header">
       <div class="sec-icon">🏗️</div>
-      <div class="sec-title">6 — Ag Buildings (Non-Dwelling): HRS 46-88 Exemption</div>
+      <div class="sec-title">6 — Ag Buildings (Non-Dwelling): <a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/Vol02_Ch0046-0115/HRS0046/HRS_0046-0088.htm" target="_blank" style="color:inherit;">HRS 46-88</a> Exemption</div>
     </div>
     <div class="items">
 
@@ -832,7 +855,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span><strong>Declaration of Compliance</strong> filed — specifying size, type, and location of the proposed structure</div>
+          <div class="main-text"><span class="tag req">REQ</span><strong>Declaration of Compliance</strong> filed — specifying size, type, and location of the proposed structure <a class="form-link" href="https://www.mauicounty.gov/DocumentCenter/View/88194" target="_blank">↓ Form</a></div>
         </div>
       </div>
       <div class="item">
@@ -852,7 +875,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag cond">COND</span>Hold Harmless Agreement and Certificate of Exemption filed (per MCC 16.26B.108.4)</div>
+          <div class="main-text"><span class="tag cond">COND</span>Hold Harmless Agreement and Certificate of Exemption filed (per <a class="src-link" href="https://library.municode.com/hi/county_of_maui/codes/code_of_ordinances?nodeId=TIT16BUCO_CH16.26BBUCO" target="_blank">MCC 16.26B.108.4</a>)</div>
         </div>
       </div>
       <div class="item">
@@ -875,7 +898,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span><strong>Farm Dwelling and Agricultural Structures Declaration</strong> form filed with the permit application</div>
+          <div class="main-text"><span class="tag req">REQ</span><strong>Farm Dwelling and Agricultural Structures Declaration</strong> form filed with the permit application <a class="form-link" href="https://www.mauicounty.gov/DocumentCenter/View/115655" target="_blank">↓ Form</a></div>
         </div>
       </div>
       <div class="item">
@@ -887,7 +910,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><span class="tag req">REQ</span>Standard building permit application submitted via <strong>MAPPS portal</strong></div>
+          <div class="main-text"><span class="tag req">REQ</span>Standard building permit application submitted via <strong><a class="src-link" href="https://mapps.mauicounty.gov/" target="_blank" style="color:inherit;">MAPPS portal</a></strong></div>
         </div>
       </div>
       <div class="item">
@@ -1028,7 +1051,7 @@
       <div class="item">
         <div class="cb"><input type="checkbox"></div>
         <div class="body">
-          <div class="main-text"><strong>Private deed restrictions may not apply.</strong> HRS §205-4.6 voids private deed restrictions recorded after 2003 that attempt to prohibit permitted agricultural uses. If an HOA or CC&amp;R tries to block a legitimate ag use, state law overrides it.</div>
+          <div class="main-text"><strong>Private deed restrictions may not apply.</strong> <a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/vol04_ch0201-0257/hrs0205/HRS_0205-0004_0005.htm" target="_blank">HRS §205-4.6</a> voids private deed restrictions recorded after 2003 that attempt to prohibit permitted agricultural uses. If an HOA or CC&amp;R tries to block a legitimate ag use, state law overrides it.</div>
         </div>
       </div>
       <div class="item">
@@ -1057,16 +1080,16 @@
 <footer>
   <strong>Sources &amp; References:</strong>
   <div class="refs">
-    HRS Chapter 205 (§205-2, §205-4.5, §205-4.6, §205-5, §205-6) &nbsp;·&nbsp;
-    HRS §46-88 &nbsp;·&nbsp;
-    MCC §19.30A &nbsp;·&nbsp;
-    MCC 16.25 &nbsp;·&nbsp;
-    MCC §16.26B.108.4 &nbsp;·&nbsp;
-    HAR Title 11, Chapter 62 &nbsp;·&nbsp;
-    Hawaiʻi DOH Wastewater Branch &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/vol04_ch0201-0257/hrs0205/hrs_0205-.htm" target="_blank">HRS Chapter 205</a> (§205-2, §205-4.5, §205-4.6, §205-5, §205-6) &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.capitol.hawaii.gov/hrscurrent/Vol02_Ch0046-0115/HRS0046/HRS_0046-0088.htm" target="_blank">HRS §46-88</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://library.municode.com/hi/county_of_maui/codes/code_of_ordinances?nodeId=TIT19ZO_ARTIICOZOPR_CH19.30AAGDI" target="_blank">MCC §19.30A</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://library.municode.com/hi/county_of_maui/codes/code_of_ordinances?nodeId=TIT16BUCO_CH16.25BUCOADSUPR" target="_blank">MCC 16.25</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://library.municode.com/hi/county_of_maui/codes/code_of_ordinances?nodeId=TIT16BUCO_CH16.26BBUCO" target="_blank">MCC §16.26B.108.4</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.law.cornell.edu/regulations/hawaii/title-11/subtitle-1/chapter-62" target="_blank">HAR Title 11, Chapter 62</a> &nbsp;·&nbsp;
+    <a class="src-link" href="https://health.hawaii.gov/wastewater/" target="_blank">Hawaiʻi DOH Wastewater Branch</a> &nbsp;·&nbsp;
     Hawaiʻi Act 125 (2017) &nbsp;·&nbsp;
-    Farm Plan Review form (Maui County Planning) &nbsp;·&nbsp;
-    Farm Dwelling and Agricultural Structures Declaration form
+    <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/118412" target="_blank">Farm Plan Review form</a> (Maui County Planning) &nbsp;·&nbsp;
+    <a class="src-link" href="https://www.mauicounty.gov/DocumentCenter/View/115655" target="_blank">Farm Dwelling and Agricultural Structures Declaration form</a>
   </div>
   <div style="margin-top:10px; color:#aaa;">
     Prepared by Oʻen Maui Architecture + Design · studio@oenmaui.com · Rev. April 2026 — v1.0<br>
