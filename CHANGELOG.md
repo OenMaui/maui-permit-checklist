@@ -1,8 +1,21 @@
-[CHANGELOG.md](https://github.com/user-attachments/files/26662422/CHANGELOG.md)
 # Change log
 
 All notable changes to the Maui Permit Checklists are tracked here. This log is
 updated as part of the quarterly review cycle and any out-of-cycle fixes.
+
+## July 2026 — Quarterly update
+
+- BPC → v1.5, SMA → v1.3.
+- Fire code: corrected reference from MCC Ch. 16.04C / NFPA 1 (2012) to MCC Ch. 16.04E / State Fire Code (2024 NFPA 1).
+- Act 295 (expedited housing-permit pathway) heads-up added to the Building Permit checklist; July 2026 reform page taken live (Act 295 and Act 306 effective July 1, 2026).
+- Act 293 (historic-review narrowing for existing residential, in effect July 3 2025) note added to BPC §11 and SMA Phase 4 — flagged explicitly as NOT a blanket exemption.
+- New accessory-dwelling explainer added to the updates page: Ord. 5966 (in effect Mar 20 2026, not yet codified) raised the ADU allowance to 720 sq ft for lots up to 21,779 sq ft, with matching deck increases; plus the Act 39 ADU revision due by Dec 31 2026.
+- Fixed broken repository links across all pages (oen-maui/maui-permit-checklists → OenMaui/maui-permit-checklist).
+- Removed stray lu421gs2hr.tmp.
+- Confirmed the 65% impervious-surface cap (MCC § 19.08.040) is current and unchanged; added a note on the § 19.08.030(L) special-use path to 75% for qualifying reduced-lot affordable-housing projects.
+- Verified unchanged: adopted codes (2018 IBC/IRC/IECC/IEBC, Oct 28 2023), Act 125 SMA thresholds, 2024 Shoreline Rule/EHL, MC-12 Ch. 202, DWS ESD method (Ord. 5759), and zoning thresholds.
+
+WATCH (October cycle): Act 39 accessory-dwelling ordinance revision due by Dec 31 2026; confirm whether Ord. 5966 has been codified into Ch. 19.35.
 
 ## 2026-04 (out-of-cycle) — Agricultural Property Permit Checklist added
 
