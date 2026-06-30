@@ -511,36 +511,49 @@ def build_pdf(html_path: Path, pdf_path: Path):
     doc.build(story)
 
 
+def _find_admin_dir() -> Path:
+    """Locate the 'Permit Forms and Checklist' folder relative to this script,
+    so the generator works on any machine without hardcoded session paths."""
+    here = Path(__file__).resolve()
+    for parent in here.parents:
+        if parent.name == "Permit Forms and Checklist":
+            return parent
+    # Fallback: the folder two levels above this script (<root>/_generators/<script>)
+    return here.parents[1]
+
+
 def main():
-    # Allow override from CLI args: build_bpc_pdf.py [HTML_PATH] [PDF_PATH]
-    # Otherwise search several candidate locations so the same script works
-    # whether it's invoked on Erik's Mac or from the sandbox VM.
+    # Explicit override:  build_bpc_pdf.py [HTML_PATH] [PDF_PATH]
     if len(sys.argv) == 3:
-        html = Path(sys.argv[1])
-        pdf = Path(sys.argv[2])
-    else:
-        candidates = [
-            Path("/Users/erik/Documents/Ø'en MAUI Architecture + Design/Admin/Permit Forms and Checklist"),
-            Path("/sessions/nice-great-dijkstra/mnt/Admin/Permit Forms and Checklist"),
-        ]
-        admin = next((c for c in candidates if c.exists()), candidates[0])
-        html = admin / "Oʻen Maui — Building Permit Submission Checklist.html"
-        pdf = admin / "Oʻen Maui — Building Permit Submission Checklist.pdf"
-        if not html.exists():
-            stevens_candidates = [
-                Path("/Users/erik/Documents/Ø'en MAUI Architecture + Design/Stevens"),
-                Path("/sessions/nice-great-dijkstra/mnt/Stevens"),
-            ]
-            stevens = next((c for c in stevens_candidates if c.exists()), None)
-            if stevens is not None:
-                alt = stevens / "Oʻen Maui - Building Permit Submission Checklist.html"
-                if alt.exists():
-                    html = alt
-        if not html.exists():
-            sys.exit(f"Cannot find BPC HTML at {html}")
-    print(f"Reading {html}")
-    print(f"Writing {pdf}")
-    build_pdf(html, pdf)
+        src, out = Path(sys.argv[1]), Path(sys.argv[2])
+        print(f"Reading {src}")
+        print(f"Writing {out}")
+        build_pdf(src, out)
+        print("Done.")
+        return
+
+    # No args: refresh BOTH the standalone admin PDF and the website download PDF.
+    admin_dir = _find_admin_dir()
+    site_root = admin_dir / "_site_staging"
+    jobs = [
+        (admin_dir / "Oʻen Maui — Building Permit Submission Checklist.html",
+         admin_dir / "Oʻen Maui — Building Permit Submission Checklist.pdf",
+         "admin standalone"),
+        (site_root / "checklists" / "building-permit.html",
+         site_root / "downloads" / "Oen-Maui-Building-Permit-Submission-Checklist.pdf",
+         "website download"),
+    ]
+    built = 0
+    for src, out, label in jobs:
+        if not src.exists():
+            print(f"(skipped {label} — source not found: {src})")
+            continue
+        print(f"Reading {src}")
+        print(f"Writing {out}  [{label}]")
+        build_pdf(src, out)
+        built += 1
+    if built == 0:
+        sys.exit("No BPC source HTML found near this script.")
     print("Done.")
 
 

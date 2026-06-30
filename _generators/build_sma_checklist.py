@@ -49,7 +49,7 @@ BRAND_NAME       = "Oʻen Maui Architecture + Design"
 DOC_TITLE        = "SMA Permit Submission Checklist"
 DOC_SUBTITLE     = "County of Maui Planning Department — Special Management Area"
 DOC_SCOPE        = "HRS Ch. 205A · MC-12 Ch. 202 (eff. Aug 25, 2024) · Act 125 (2025)"
-DOC_REV          = "Rev. April 2026 — v1.2"
+DOC_REV          = "Rev. July 2026 — v1.3"
 DOC_SISTER       = "Sister document to the Building Permit Submission Checklist"
 PREPARED_BY      = "studio@oenmaui.com"
 
@@ -76,6 +76,12 @@ COLOR_XREF_BG    = HexColor("#efeaf5")
 # ----------------------------------------------------------------------------
 
 RECENT_CHANGES = [
+    ("v1.3 (July 2026) — Quarterly review",
+     "Added an Act 293 historic-review note to Phase 4 (AIS/SHPD). Fixed "
+     "repository link. Confirmed Act 125 split thresholds ($750K / $500K), "
+     "the 2024 Maui Island Shoreline Rule / Erosion Hazard Line framework, "
+     "and MC-12 Ch. 202 current — no regulatory changes to SMA procedure "
+     "this cycle."),
     ("v1.2 — Erosion Hazard Line is the default setback line (2024 Shoreline Rule update)",
      "Phase 1 reordered so the EHL mapped/unmapped check happens BEFORE any "
      "decision about ordering a certified shoreline survey. Phase 4 item on "
@@ -288,7 +294,14 @@ SECTIONS = [
              None, None),
             ("p4-06", ["COND"],
              "Archaeological Inventory Survey (AIS) / SHPD consultation if cultural resources are implicated.",
-             None,
+             "Act 293 (in effect since July 3, 2025) narrowed when Chapter 6E "
+             "historic review is triggered for existing residential property: "
+             "review applies only if the structure is over 50 years old AND "
+             "listed or nominated on the Hawaiʻi or National Register, or "
+             "located in a historic district. It is not a blanket exemption — "
+             "projects with archaeological, burial, shoreline, or "
+             "nonresidential characteristics can still require Chapter 6E "
+             "review. See the July 2026 permit reform notes.",
              "↔ BPC § 11 SHPD approval"),
             ("p4-07", ["COND"],
              "Initiate concurrent General Plan / Community Plan / zoning amendment if the Director finds the project inconsistent.",
@@ -1278,31 +1291,46 @@ def build_pdf(out_path):
 # MAIN
 # ----------------------------------------------------------------------------
 
+def _find_admin_dir():
+    """Locate the 'Permit Forms and Checklist' folder relative to this script,
+    so the generator works on any machine without hardcoded session paths."""
+    from pathlib import Path
+    here = Path(__file__).resolve()
+    for parent in here.parents:
+        if parent.name == "Permit Forms and Checklist":
+            return parent
+    # Fallback: the folder two levels above this script (<root>/_generators/<script>)
+    return here.parents[1]
+
+
 if __name__ == "__main__":
-    outputs_dir = "/sessions/nice-great-dijkstra/mnt/outputs"
-    admin_dir = "/sessions/nice-great-dijkstra/mnt/Admin/Permit Forms and Checklist"
+    import shutil
 
-    html_path_local = os.path.join(outputs_dir, "Maui_SMA_Permit_Checklist.html")
-    pdf_path_local  = os.path.join(outputs_dir, "Maui_SMA_Permit_Checklist.pdf")
+    admin_dir = _find_admin_dir()
+    site_root = admin_dir / "_site_staging"
 
-    html_path_admin = os.path.join(admin_dir, "Oʻen Maui — Maui SMA Permit Checklist.html")
-    pdf_path_admin  = os.path.join(admin_dir, "Oʻen Maui — Maui SMA Permit Checklist.pdf")
+    # Standalone admin copies (full firm-contact footer) — the distributable checklist.
+    html_path_admin = admin_dir / "Oʻen Maui — Maui SMA Permit Checklist.html"
+    pdf_path_admin  = admin_dir / "Oʻen Maui — Maui SMA Permit Checklist.pdf"
 
     html = build_html()
-    with open(html_path_local, "w", encoding="utf-8") as f:
-        f.write(html)
     with open(html_path_admin, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"HTML written: {html_path_local}")
     print(f"HTML written: {html_path_admin}")
 
-    build_pdf(pdf_path_local)
-    print(f"PDF written: {pdf_path_local}")
-
-    import shutil
-    shutil.copy(pdf_path_local, pdf_path_admin)
+    build_pdf(str(pdf_path_admin))
     print(f"PDF written: {pdf_path_admin}")
 
-    # Count items
+    # Refresh the website's downloadable PDF (same standalone content).
+    downloads_pdf = site_root / "downloads" / "Oen-Maui-Maui-SMA-Permit-Checklist.pdf"
+    if downloads_pdf.parent.exists():
+        shutil.copy(str(pdf_path_admin), str(downloads_pdf))
+        print(f"PDF copied to site downloads: {downloads_pdf}")
+    else:
+        print(f"(skipped site downloads — {downloads_pdf.parent} not found)")
+
+    # NOTE: the website's on-page checklists/sma-permit.html is hand-maintained
+    # (it carries the site nav / chrome) and is intentionally NOT overwritten here.
+
     total = sum(len(s["items"]) for s in SECTIONS)
     print(f"Total checklist items: {total}")
